@@ -17,4 +17,5 @@ public class StringUtil {
     private StringUtil() {
         throw new AssertionError("StringUtil无法被实例化");
     }
+
 }

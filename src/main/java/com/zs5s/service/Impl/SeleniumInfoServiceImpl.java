@@ -4,10 +4,10 @@
  */
 package com.zs5s.service.Impl;
 
-import com.zs5s.config.SeleniumProperties;
 import com.zs5s.dao.SeleniumInfoDao;
 import com.zs5s.entity.SeleniumInfo;
 import com.zs5s.service.SeleniumInfoService;
+import com.zs5s.util.logger.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -20,12 +20,9 @@ import java.util.List;
 public class SeleniumInfoServiceImpl implements SeleniumInfoService {
     private final SeleniumInfoDao seleniumInfoDao;
 
-    private  final SeleniumProperties seleniumProperties;
-
     @Autowired
-    public SeleniumInfoServiceImpl(SeleniumInfoDao seleniumInfoDao, SeleniumProperties seleniumProperties) {
+    public SeleniumInfoServiceImpl(SeleniumInfoDao seleniumInfoDao) {
         this.seleniumInfoDao = seleniumInfoDao;
-        this.seleniumProperties = seleniumProperties;
     }
 
     @Override

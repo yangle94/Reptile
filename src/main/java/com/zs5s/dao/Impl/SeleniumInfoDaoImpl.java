@@ -7,6 +7,7 @@ package com.zs5s.dao.Impl;
 import com.zs5s.dao.SeleniumInfoDao;
 import com.zs5s.entity.SeleniumInfo;
 import com.zs5s.mapper.SeleniumInfoMapper;
+import com.zs5s.util.logger.LogUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

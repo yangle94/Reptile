@@ -83,7 +83,7 @@ public class HttpClientByYL {
 
     /**
      * get方法提交参数
-     * @param url
+     * @param url url地址
      * @return 返回结果
      */
 
@@ -94,10 +94,10 @@ public class HttpClientByYL {
 
     /**
      * get方法提交参数，设置参数
-     * @param url
-     * @param params
-     * @param <T>
-     * @return
+     * @param url url地址
+     * @param params 提交参数
+     * @param <T> 泛型
+     * @return 结果返回值
      */
     public static <T> String httpGetRequest(String url, Map<String, T> params) {
         URIBuilder ub = new URIBuilder();
@@ -117,10 +117,10 @@ public class HttpClientByYL {
 
     /**
      * get方法提交参数，设置请求头，设置参数
-     * @param url
-     * @param headers
-     * @param params
-     * @return
+     * @param url url地址
+     * @param headers 头部
+     * @param params 参数
+     * @return 结果返回值
      */
     public static String httpGetRequest(String url, Map<String, Object> headers, Map<String, Object> params) {
         URIBuilder ub = new URIBuilder();
@@ -132,19 +132,21 @@ public class HttpClientByYL {
         HttpGet httpGet = null;
         try {
             httpGet = new HttpGet(ub.build());
+
+            for (Map.Entry<String, Object> param : headers.entrySet()) {
+                httpGet.addHeader(param.getKey(), String.valueOf(param.getValue()));
+            }
         } catch (URISyntaxException e) {
             logger.error("************ " + "HttpClientYl" + Thread.currentThread().getStackTrace()[1].getMethodName() + "**************  ", e);
         }
-        for (Map.Entry<String, Object> param : headers.entrySet()) {
-            httpGet.addHeader(param.getKey(), String.valueOf(param.getValue()));
-        }
+
         return getResult(httpGet);
     }
 
     /**
      * post访问url，无参数
-     * @param url
-     * @return
+     * @param url url地址
+     * @return 返回结果
      */
     public static String httpPostRequest(String url) {
         HttpPost httpPost = new HttpPost(url);
@@ -153,9 +155,9 @@ public class HttpClientByYL {
 
     /**
      * 用post进行提交参数，不设置请求头
-     * @param url
-     * @param params
-     * @return
+     * @param url url地址
+     * @param params 提交参数
+     * @return 返回结果
      */
     public static String httpPostRequest(String url, Map<String, Object> params) {
         HttpPost httpPost = new HttpPost(url);
@@ -170,9 +172,9 @@ public class HttpClientByYL {
 
     /**
      * 使用post方法提交json数据
-     * @param url
+     * @param url url地址
      * @param obj json数据
-     * @return
+     * @return 返回结果
      */
     public static String httpPostRequestFromJson(String url, String obj) {
         HttpPost httpPost = new HttpPost(url);
@@ -185,17 +187,20 @@ public class HttpClientByYL {
 
     /**
      *  进行post方法进行请求，用utf-8进行编码
-     * @param url
+     * @param url url地址
      * @param headers 头部信息
      * @param params  请求参数
-     * @return
+     * @return 返回结果
      */
     public static String httpPostRequest(String url, Map<String, Object> headers, Map<String, Object> params) {
         HttpPost httpPost = new HttpPost(url);
+
         for (Map.Entry<String, Object> param : headers.entrySet()) {
             httpPost.addHeader(param.getKey(), String.valueOf(param.getValue()));
         }
+
         ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
+
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
         } catch (UnsupportedEncodingException e) {
@@ -207,15 +212,18 @@ public class HttpClientByYL {
 
     /**
      * 将http请求所需的参数进行url编码
-     * @param params
-     * @param <T>
-     * @return
+     * @param params 参数
+     * @param <T> 泛型
+     * @return 结果
      */
     private static <T> ArrayList<NameValuePair> covertParams2NVPS(Map<String, T> params) {
+
         ArrayList<NameValuePair> pairs = new ArrayList<>();
+
         for (Map.Entry<String, T> param : params.entrySet()) {
             pairs.add(new BasicNameValuePair(param.getKey(), String.valueOf(param.getValue())));
         }
+
         return pairs;
     }
 
@@ -227,6 +235,7 @@ public class HttpClientByYL {
 
         CloseableHttpClient httpClient = getHttpClient();
         HttpEntity entity = null;
+
         try {
             CloseableHttpResponse response = httpClient.execute(request);
             entity = response.getEntity();
