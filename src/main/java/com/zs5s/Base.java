@@ -10,7 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author yangle
- * @version $Id SeleniumMontitoring.java, v 0.1 2017-01-21 下午5:18 yangle Exp $$
+ * @version $Id Base.java, v 0.1 2017-01-21 下午5:18 yangle Exp $$
  */
 @SpringBootApplication
 @EnableScheduling

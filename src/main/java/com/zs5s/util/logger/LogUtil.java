@@ -6,10 +6,12 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 /**
+ * 日志封装
  * Static methods for validation and emiting log messages
  */
-public class Zs5sLogger implements Serializable{
-	private static final Logger logger = LoggerFactory.getLogger(Zs5sLogger.class);
+public class LogUtil implements Serializable{
+	private static final Logger logger = LoggerFactory.getLogger(LogUtil.class);
+
 	public static void debug(Object obj,String str) {
 		logger.debug("************ " + obj.getClass().getName()
 				+ Thread.currentThread().getStackTrace()[1].getMethodName()

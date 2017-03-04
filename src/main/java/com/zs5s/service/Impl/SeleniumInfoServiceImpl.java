@@ -8,9 +8,7 @@ import com.zs5s.config.SeleniumProperties;
 import com.zs5s.dao.SeleniumInfoDao;
 import com.zs5s.entity.SeleniumInfo;
 import com.zs5s.service.SeleniumInfoService;
-import com.zs5s.util.logger.Zs5sLogger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -42,7 +40,7 @@ public class SeleniumInfoServiceImpl implements SeleniumInfoService {
      */
     @Override
     public List<SeleniumInfo> getSeleniumInfoList(List<Integer> ids) {
-        Zs5sLogger.info(this,"list size:" + ids.size());
+        LogUtil.info(this,"list size:" + ids.size());
         return seleniumInfoDao.getSeleniumInfoList(ids);
     }
 
@@ -53,7 +51,7 @@ public class SeleniumInfoServiceImpl implements SeleniumInfoService {
      */
     @Override
     public int insertSeleniumInfo(SeleniumInfo seleniumInfo) {
-        Zs5sLogger.info(this,"seleniumInfo id:" + seleniumInfo.getId());
+        LogUtil.info(this,"seleniumInfo id:" + seleniumInfo.getId());
         return seleniumInfoDao.insertSeleniumInfo(seleniumInfo);
     }
 
@@ -64,7 +62,7 @@ public class SeleniumInfoServiceImpl implements SeleniumInfoService {
      */
     @Override
     public int deleteSeleniumInfo(SeleniumInfo seleniumInfo) {
-        Zs5sLogger.info(this,"seleniumInfo id:" + seleniumInfo.getId());
+        LogUtil.info(this,"seleniumInfo id:" + seleniumInfo.getId());
         return seleniumInfoDao.deleteSeleniumInfo(seleniumInfo);
     }
 
@@ -75,19 +73,19 @@ public class SeleniumInfoServiceImpl implements SeleniumInfoService {
      */
     @Override
     public int updateSeleniumInfo(SeleniumInfo seleniumInfo) {
-        Zs5sLogger.info(this,"seleniumInfo id:" + seleniumInfo.getId());
+        LogUtil.info(this,"seleniumInfo id:" + seleniumInfo.getId());
         return seleniumInfoDao.updateSeleniumInfo(seleniumInfo);
     }
 
     @Override
     public List<SeleniumInfo> findAll() {
-        Zs5sLogger.info(this,"seleniumInfo findAll");
+        LogUtil.info(this,"seleniumInfo findAll");
         return seleniumInfoDao.findAll();
     }
 
     @Override
     public SeleniumInfo findLast() {
-        Zs5sLogger.info(this,"seleniumInfo findAll");
+        LogUtil.info(this,"seleniumInfo findAll");
         return seleniumInfoDao.findLast();
     }
 }

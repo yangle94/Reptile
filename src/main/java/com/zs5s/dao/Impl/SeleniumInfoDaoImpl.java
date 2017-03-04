@@ -7,7 +7,6 @@ package com.zs5s.dao.Impl;
 import com.zs5s.dao.SeleniumInfoDao;
 import com.zs5s.entity.SeleniumInfo;
 import com.zs5s.mapper.SeleniumInfoMapper;
-import com.zs5s.util.logger.Zs5sLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,43 +28,43 @@ public class SeleniumInfoDaoImpl implements SeleniumInfoDao {
 
     @Override
     public SeleniumInfo getSeleniumInfo(int id) {
-        Zs5sLogger.info(this,"id:" + id);
+        LogUtil.info(this,"id:" + id);
         return seleniumInfoMapper.findById(id);
     }
 
     @Override
     public List<SeleniumInfo> getSeleniumInfoList(List<Integer> ids) {
-        Zs5sLogger.info(this,"idsSize:" + ids.size());
+        LogUtil.info(this,"idsSize:" + ids.size());
         return seleniumInfoMapper.findListInIds(ids);
     }
 
     @Override
     public int insertSeleniumInfo(SeleniumInfo seleniumInfo) {
-        Zs5sLogger.info(this,"id:" + seleniumInfo.getId());
+        LogUtil.info(this,"id:" + seleniumInfo.getId());
         return seleniumInfoMapper.insert(seleniumInfo);
     }
 
     @Override
     public int deleteSeleniumInfo(SeleniumInfo seleniumInfo) {
-        Zs5sLogger.info(this,"id:" + seleniumInfo.getId());
+        LogUtil.info(this,"id:" + seleniumInfo.getId());
         return seleniumInfoMapper.deleteById(seleniumInfo.getId());
     }
 
     @Override
     public int updateSeleniumInfo(SeleniumInfo seleniumInfo) {
-        Zs5sLogger.info(this,"id:" + seleniumInfo.getId());
+        LogUtil.info(this,"id:" + seleniumInfo.getId());
         return seleniumInfoMapper.updateById(seleniumInfo);
     }
 
     @Override
     public List<SeleniumInfo> findAll() {
-        Zs5sLogger.info(this,"findAll");
+        LogUtil.info(this,"findAll");
         return seleniumInfoMapper.findAll();
     }
 
     @Override
     public SeleniumInfo findLast() {
-        Zs5sLogger.info(this,"findAll");
+        LogUtil.info(this,"findAll");
         return seleniumInfoMapper.findLast();
     }
 }
