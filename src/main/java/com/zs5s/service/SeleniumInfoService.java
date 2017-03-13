@@ -14,10 +14,16 @@ import java.util.List;
  */
 public interface SeleniumInfoService {
     SeleniumInfo getSeleniumInfo(int id);
+
     List<SeleniumInfo> getSeleniumInfoList(List<Integer> ids);
+
     int insertSeleniumInfo(SeleniumInfo seleniumInfoDao);
+
     int deleteSeleniumInfo(SeleniumInfo seleniumInfoDao);
+
     int updateSeleniumInfo(SeleniumInfo seleniumInfoDao);
+
     List<SeleniumInfo> findAll();
+
     SeleniumInfo findLast();
 }

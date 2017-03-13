@@ -22,7 +22,9 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -49,6 +51,7 @@ public class HttpClientByYL {
     /**
      * 初始化httpclient路由参数
      */
+    @PostConstruct
     private static void init() {
         if (cm == null) {
             cm = new PoolingHttpClientConnectionManager();
@@ -61,7 +64,6 @@ public class HttpClientByYL {
      * 通过连接池获取HttpClient
      */
     private static CloseableHttpClient getHttpClient() {
-        init();
         return HttpClients.custom().setRedirectStrategy(new DefaultRedirectStrategy() {
             public boolean isRedirected(HttpRequest request, HttpResponse response, HttpContext context) {
                 boolean isRedirect = false;
@@ -87,7 +89,7 @@ public class HttpClientByYL {
      * @return 返回结果
      */
 
-    public static String httpGetRequest(String url) {
+    public static InputStream httpGetRequest(String url) {
         HttpGet httpGet = new HttpGet(url);
         return getResult(httpGet);
     }
@@ -99,7 +101,7 @@ public class HttpClientByYL {
      * @param <T> 泛型
      * @return 结果返回值
      */
-    public static <T> String httpGetRequest(String url, Map<String, T> params) {
+    public static <T> InputStream httpGetRequest(String url, Map<String, T> params) {
         URIBuilder ub = new URIBuilder();
         ub.setPath(url);
 
@@ -122,7 +124,7 @@ public class HttpClientByYL {
      * @param params 参数
      * @return 结果返回值
      */
-    public static String httpGetRequest(String url, Map<String, Object> headers, Map<String, Object> params) {
+    public static InputStream httpGetRequest(String url, Map<String, Object> headers, Map<String, Object> params) {
         URIBuilder ub = new URIBuilder();
         ub.setPath(url);
 
@@ -148,7 +150,7 @@ public class HttpClientByYL {
      * @param url url地址
      * @return 返回结果
      */
-    public static String httpPostRequest(String url) {
+    public static InputStream httpPostRequest(String url) {
         HttpPost httpPost = new HttpPost(url);
         return getResult(httpPost);
     }
@@ -159,7 +161,7 @@ public class HttpClientByYL {
      * @param params 提交参数
      * @return 返回结果
      */
-    public static String httpPostRequest(String url, Map<String, Object> params) {
+    public static InputStream httpPostRequest(String url, Map<String, Object> params) {
         HttpPost httpPost = new HttpPost(url);
         ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
         try {
@@ -176,7 +178,7 @@ public class HttpClientByYL {
      * @param obj json数据
      * @return 返回结果
      */
-    public static String httpPostRequestFromJson(String url, String obj) {
+    public static InputStream httpPostRequestFromJson(String url, String obj) {
         HttpPost httpPost = new HttpPost(url);
         StringEntity stringEntity = new StringEntity(obj, "utf-8");
         stringEntity.setContentEncoding("UTF-8");
@@ -192,7 +194,7 @@ public class HttpClientByYL {
      * @param params  请求参数
      * @return 返回结果
      */
-    public static String httpPostRequest(String url, Map<String, Object> headers, Map<String, Object> params) {
+    public static InputStream httpPostRequest(String url, Map<String, Object> headers, Map<String, Object> params) {
         HttpPost httpPost = new HttpPost(url);
 
         for (Map.Entry<String, Object> param : headers.entrySet()) {
@@ -202,6 +204,7 @@ public class HttpClientByYL {
         ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
 
         try {
+
             httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
         } catch (UnsupportedEncodingException e) {
             logger.error("************ " + "HttpClientYl" + Thread.currentThread().getStackTrace()[1].getMethodName() + "**************  ", e);
@@ -230,23 +233,26 @@ public class HttpClientByYL {
     /**
      * 处理Http请求
      */
-    private static String getResult(HttpRequestBase request) {
+    private static InputStream getResult(HttpRequestBase request) {
         logger.debug("************ 进入HttpClientByYl.getResult ************getResult");
 
         CloseableHttpClient httpClient = getHttpClient();
         HttpEntity entity = null;
 
-        try {
-            CloseableHttpResponse response = httpClient.execute(request);
+        try(CloseableHttpResponse response = httpClient.execute(request)) {
+
             entity = response.getEntity();
             if (entity != null) {
-                String result = EntityUtils.toString(entity);
-                response.close();
-                return result;
+                return entity.getContent();
+//                String result = EntityUtils.toString(entity);
+//                response.close();
+//                return result;
             }
         } catch (IOException e) {
+
             logger.error("************HttpClientByYl出错************getResult" + Thread.currentThread().getStackTrace()[1].getMethodName());
         } finally {
+
             if(entity != null) {
                 try {
                     EntityUtils.consume(entity);
@@ -255,7 +261,8 @@ public class HttpClientByYL {
                 }
             }
         }
-        return "";
+
+        return null;
     }
 
 }
