@@ -36,7 +36,7 @@ public class HttpOperat {
         String html = "";
 
         if(paramInfoDto == null || StringUtil.isEmpty(paramInfoDto.getUrl())) {
-            LogUtil.error(HttpOperat.class, "访问URL允许为空");
+            LogUtil.error(HttpOperat.class, "访问URL允许为空", null);
             throw new ValueIsNullException("访问URL不允许为空！");
         }
 

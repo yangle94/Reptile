@@ -21,10 +21,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
@@ -51,7 +48,6 @@ public class HttpClientByYL {
     /**
      * 初始化httpclient路由参数
      */
-    @PostConstruct
     private static void init() {
         if (cm == null) {
             cm = new PoolingHttpClientConnectionManager();
@@ -64,6 +60,7 @@ public class HttpClientByYL {
      * 通过连接池获取HttpClient
      */
     private static CloseableHttpClient getHttpClient() {
+        init();
         return HttpClients.custom().setRedirectStrategy(new DefaultRedirectStrategy() {
             public boolean isRedirected(HttpRequest request, HttpResponse response, HttpContext context) {
                 boolean isRedirect = false;
@@ -111,7 +108,7 @@ public class HttpClientByYL {
         try {
             httpGet = new HttpGet(ub.build());
         } catch (URISyntaxException e) {
-            LogUtil.error(HttpClientByYL.class, "url编码出现异常");
+            LogUtil.error(HttpClientByYL.class, "url编码出现异常", e);
         }
         return getResult(httpGet);
     }
@@ -142,7 +139,7 @@ public class HttpClientByYL {
             }
 
         } catch (URISyntaxException e) {
-            LogUtil.error(HttpClientByYL.class, "url编码出现异常");
+            LogUtil.error(HttpClientByYL.class, "url编码出现异常", e);
         }
 
         return getResult(httpGet);
@@ -170,7 +167,7 @@ public class HttpClientByYL {
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
         } catch (UnsupportedEncodingException e) {
-            LogUtil.error(HttpClientByYL.class, "url编码出现异常");
+            LogUtil.error(HttpClientByYL.class, "url编码出现异常", e);
         }
         return getResult(httpPost);
     }
@@ -213,7 +210,7 @@ public class HttpClientByYL {
             httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
         } catch (UnsupportedEncodingException e) {
 
-            LogUtil.error(HttpClientByYL.class, "url编码出现异常");
+            LogUtil.error(HttpClientByYL.class, "url编码出现异常", e);
         }
 
         return getResult(httpPost);
@@ -255,14 +252,14 @@ public class HttpClientByYL {
             }
         } catch (IOException e) {
 
-            LogUtil.error(HttpClientByYL.class, "http请求IO异常：" + e.toString());
+            LogUtil.error(HttpClientByYL.class, "http请求IO异常：", e);
         } finally {
 
             if(entity != null) {
                 try {
                     EntityUtils.consume(entity);
                 } catch (IOException e) {
-                    LogUtil.error(HttpClientByYL.class, "关闭请求异常：" + e.toString());
+                    LogUtil.error(HttpClientByYL.class, "关闭请求异常：", e);
                 }
             }
         }
