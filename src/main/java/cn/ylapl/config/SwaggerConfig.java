@@ -32,7 +32,7 @@ public class SwaggerConfig {
                 .forCodeGeneration(false)
                 .pathMapping("/")
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.zs5s.controller"))
+                .apis(RequestHandlerSelectors.basePackage("cn.ylapl.controller"))
                 .paths(PathSelectors.any())//过滤的接口
                 .build().apiInfo(demoApiInfo());
     }

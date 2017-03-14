@@ -12,27 +12,27 @@ import java.io.Serializable;
 public class LogUtil implements Serializable{
 	private static final Logger logger = LoggerFactory.getLogger(LogUtil.class);
 
-	public static void debug(Object obj,String str) {
-		logger.debug("************ " + obj.getClass().getName()
+	public static <T>void debug(Class<T> obj,String str) {
+		logger.debug(">>>>" + obj.getName() + ">>>"
 				+ Thread.currentThread().getStackTrace()[1].getMethodName()
-				+ "**************" + str);
+				+ ">>>>" + str);
 	}
 
-	public static void info(Object obj,String str) {
-		logger.info("************ " + obj.getClass().getName()
+	public static <T>void info(Class<T> obj,String str) {
+		logger.info(">>>>" + obj.getName() + ">>>"
 				+ Thread.currentThread().getStackTrace()[1].getMethodName()
-				+ "**************" + str);
+				+ ">>>>" + str);
 	}
 
-	public static void error(Object obj,String str) {
-		logger.error("************ " + obj.getClass().getName()
+	public static <T>void error(Class<T> obj,String str) {
+		logger.error(">>>>" + obj.getName() + ">>>"
 				+ Thread.currentThread().getStackTrace()[1].getMethodName()
-				+ "**************" + str);
+				+ ">>>>" + str);
 	}
 
-	public static void warn(Object obj,String str) {
-		logger.warn("************ " + obj.getClass().getName()
+	public static <T>void warn(Class<T> obj,String str) {
+		logger.warn(">>>>" + obj.getName() + ">>>"
 				+ Thread.currentThread().getStackTrace()[1].getMethodName()
-				+ "**************" + str);
+				+ ">>>>" + str);
 	}
 }

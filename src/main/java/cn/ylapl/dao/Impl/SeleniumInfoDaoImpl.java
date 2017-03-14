@@ -29,43 +29,43 @@ public class SeleniumInfoDaoImpl implements SeleniumInfoDao {
 
     @Override
     public SeleniumInfo getSeleniumInfo(int id) {
-        LogUtil.info(this,"id:" + id);
+        LogUtil.info(this.getClass(),"id:" + id);
         return seleniumInfoMapper.findById(id);
     }
 
     @Override
     public List<SeleniumInfo> getSeleniumInfoList(List<Integer> ids) {
-        LogUtil.info(this,"idsSize:" + ids.size());
+        LogUtil.info(this.getClass(),"idsSize:" + ids.size());
         return seleniumInfoMapper.findListInIds(ids);
     }
 
     @Override
     public int insertSeleniumInfo(SeleniumInfo seleniumInfo) {
-        LogUtil.info(this,"id:" + seleniumInfo.getId());
+        LogUtil.info(this.getClass(),"id:" + seleniumInfo.getId());
         return seleniumInfoMapper.insert(seleniumInfo);
     }
 
     @Override
     public int deleteSeleniumInfo(SeleniumInfo seleniumInfo) {
-        LogUtil.info(this,"id:" + seleniumInfo.getId());
+        LogUtil.info(this.getClass(),"id:" + seleniumInfo.getId());
         return seleniumInfoMapper.deleteById(seleniumInfo.getId());
     }
 
     @Override
     public int updateSeleniumInfo(SeleniumInfo seleniumInfo) {
-        LogUtil.info(this,"id:" + seleniumInfo.getId());
+        LogUtil.info(this.getClass(),"id:" + seleniumInfo.getId());
         return seleniumInfoMapper.updateById(seleniumInfo);
     }
 
     @Override
     public List<SeleniumInfo> findAll() {
-        LogUtil.info(this,"findAll");
+        LogUtil.info(this.getClass(),"findAll");
         return seleniumInfoMapper.findAll();
     }
 
     @Override
     public SeleniumInfo findLast() {
-        LogUtil.info(this,"findAll");
+        LogUtil.info(this.getClass(),"findAll");
         return seleniumInfoMapper.findLast();
     }
 }

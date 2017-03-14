@@ -4,6 +4,8 @@
  */
 package cn.ylapl.util;
 
+import cn.ylapl.util.empty.MapUtil;
+import cn.ylapl.util.logger.LogUtil;
 import org.apache.http.*;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -24,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -45,8 +46,7 @@ public class HttpClientByYL {
     private static final int MAX_ROUTE_NUM = 300;
 
     private static PoolingHttpClientConnectionManager cm;
-    private static String UTF_8 = "UTF-8";
-    private static Logger logger = LoggerFactory.getLogger(HttpClientByYL.class);
+    private static final String UTF_8 = "UTF-8";
 
     /**
      * 初始化httpclient路由参数
@@ -89,7 +89,7 @@ public class HttpClientByYL {
      * @return 返回结果
      */
 
-    public static InputStream httpGetRequest(String url) {
+    public static String httpGetRequest(String url) {
         HttpGet httpGet = new HttpGet(url);
         return getResult(httpGet);
     }
@@ -98,10 +98,9 @@ public class HttpClientByYL {
      * get方法提交参数，设置参数
      * @param url url地址
      * @param params 提交参数
-     * @param <T> 泛型
      * @return 结果返回值
      */
-    public static <T> InputStream httpGetRequest(String url, Map<String, T> params) {
+    public static String httpGetRequest(String url, Map<String, String> params) {
         URIBuilder ub = new URIBuilder();
         ub.setPath(url);
 
@@ -112,7 +111,7 @@ public class HttpClientByYL {
         try {
             httpGet = new HttpGet(ub.build());
         } catch (URISyntaxException e) {
-            logger.error("************ " + "HttpClientYl" + Thread.currentThread().getStackTrace()[1].getMethodName() + "**************  ", e);
+            LogUtil.error(HttpClientByYL.class, "url编码出现异常");
         }
         return getResult(httpGet);
     }
@@ -124,7 +123,7 @@ public class HttpClientByYL {
      * @param params 参数
      * @return 结果返回值
      */
-    public static InputStream httpGetRequest(String url, Map<String, Object> headers, Map<String, Object> params) {
+    public static String httpGetRequest(String url, Map<String, String> headers, Map<String, String> params) {
         URIBuilder ub = new URIBuilder();
         ub.setPath(url);
 
@@ -135,11 +134,15 @@ public class HttpClientByYL {
         try {
             httpGet = new HttpGet(ub.build());
 
-            for (Map.Entry<String, Object> param : headers.entrySet()) {
-                httpGet.addHeader(param.getKey(), String.valueOf(param.getValue()));
+            if(MapUtil.isNotEmpty(headers)) {
+
+                for (Map.Entry<String, String> param : headers.entrySet()) {
+                    httpGet.addHeader(param.getKey(), param.getValue());
+                }
             }
+
         } catch (URISyntaxException e) {
-            logger.error("************ " + "HttpClientYl" + Thread.currentThread().getStackTrace()[1].getMethodName() + "**************  ", e);
+            LogUtil.error(HttpClientByYL.class, "url编码出现异常");
         }
 
         return getResult(httpGet);
@@ -150,7 +153,7 @@ public class HttpClientByYL {
      * @param url url地址
      * @return 返回结果
      */
-    public static InputStream httpPostRequest(String url) {
+    public static String httpPostRequest(String url) {
         HttpPost httpPost = new HttpPost(url);
         return getResult(httpPost);
     }
@@ -161,13 +164,13 @@ public class HttpClientByYL {
      * @param params 提交参数
      * @return 返回结果
      */
-    public static InputStream httpPostRequest(String url, Map<String, Object> params) {
+    public static String httpPostRequest(String url, Map<String, String> params) {
         HttpPost httpPost = new HttpPost(url);
         ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
         } catch (UnsupportedEncodingException e) {
-            logger.error("************ " + "HttpClientYl" + Thread.currentThread().getStackTrace()[1].getMethodName() + "**************  ", e);
+            LogUtil.error(HttpClientByYL.class, "url编码出现异常");
         }
         return getResult(httpPost);
     }
@@ -178,7 +181,7 @@ public class HttpClientByYL {
      * @param obj json数据
      * @return 返回结果
      */
-    public static InputStream httpPostRequestFromJson(String url, String obj) {
+    public static String httpPostRequestFromJson(String url, String obj) {
         HttpPost httpPost = new HttpPost(url);
         StringEntity stringEntity = new StringEntity(obj, "utf-8");
         stringEntity.setContentEncoding("UTF-8");
@@ -194,11 +197,13 @@ public class HttpClientByYL {
      * @param params  请求参数
      * @return 返回结果
      */
-    public static InputStream httpPostRequest(String url, Map<String, Object> headers, Map<String, Object> params) {
+    public static String httpPostRequest(String url, Map<String, String> headers, Map<String, String> params) {
         HttpPost httpPost = new HttpPost(url);
 
-        for (Map.Entry<String, Object> param : headers.entrySet()) {
-            httpPost.addHeader(param.getKey(), String.valueOf(param.getValue()));
+        if(MapUtil.isNotEmpty(headers)) {
+            for (Map.Entry<String, String> param : headers.entrySet()) {
+                httpPost.addHeader(param.getKey(), param.getValue());
+            }
         }
 
         ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
@@ -207,7 +212,8 @@ public class HttpClientByYL {
 
             httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
         } catch (UnsupportedEncodingException e) {
-            logger.error("************ " + "HttpClientYl" + Thread.currentThread().getStackTrace()[1].getMethodName() + "**************  ", e);
+
+            LogUtil.error(HttpClientByYL.class, "url编码出现异常");
         }
 
         return getResult(httpPost);
@@ -216,15 +222,15 @@ public class HttpClientByYL {
     /**
      * 将http请求所需的参数进行url编码
      * @param params 参数
-     * @param <T> 泛型
      * @return 结果
      */
-    private static <T> ArrayList<NameValuePair> covertParams2NVPS(Map<String, T> params) {
-
+    private static ArrayList<NameValuePair> covertParams2NVPS(Map<String, String> params) {
         ArrayList<NameValuePair> pairs = new ArrayList<>();
 
-        for (Map.Entry<String, T> param : params.entrySet()) {
-            pairs.add(new BasicNameValuePair(param.getKey(), String.valueOf(param.getValue())));
+        if(MapUtil.isNotEmpty(params)) {
+            for (Map.Entry<String, String> param : params.entrySet()) {
+                pairs.add(new BasicNameValuePair(param.getKey(), param.getValue()));
+            }
         }
 
         return pairs;
@@ -233,8 +239,8 @@ public class HttpClientByYL {
     /**
      * 处理Http请求
      */
-    private static InputStream getResult(HttpRequestBase request) {
-        logger.debug("************ 进入HttpClientByYl.getResult ************getResult");
+    private static String getResult(HttpRequestBase request) {
+        LogUtil.debug(HttpClientByYL.class, "进入处理请求");
 
         CloseableHttpClient httpClient = getHttpClient();
         HttpEntity entity = null;
@@ -243,21 +249,20 @@ public class HttpClientByYL {
 
             entity = response.getEntity();
             if (entity != null) {
-                return entity.getContent();
-//                String result = EntityUtils.toString(entity);
-//                response.close();
-//                return result;
+                String result = EntityUtils.toString(entity);
+                response.close();
+                return result;
             }
         } catch (IOException e) {
 
-            logger.error("************HttpClientByYl出错************getResult" + Thread.currentThread().getStackTrace()[1].getMethodName());
+            LogUtil.error(HttpClientByYL.class, "http请求IO异常：" + e.toString());
         } finally {
 
             if(entity != null) {
                 try {
                     EntityUtils.consume(entity);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LogUtil.error(HttpClientByYL.class, "关闭请求异常：" + e.toString());
                 }
             }
         }

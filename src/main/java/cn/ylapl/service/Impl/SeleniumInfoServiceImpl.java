@@ -37,7 +37,7 @@ public class SeleniumInfoServiceImpl implements SeleniumInfoService {
      */
     @Override
     public List<SeleniumInfo> getSeleniumInfoList(List<Integer> ids) {
-        LogUtil.info(this,"list size:" + ids.size());
+        LogUtil.info(this.getClass(),"list size:" + ids.size());
         return seleniumInfoDao.getSeleniumInfoList(ids);
     }
 
@@ -48,7 +48,7 @@ public class SeleniumInfoServiceImpl implements SeleniumInfoService {
      */
     @Override
     public int insertSeleniumInfo(SeleniumInfo seleniumInfo) {
-        LogUtil.info(this,"seleniumInfo id:" + seleniumInfo.getId());
+        LogUtil.info(this.getClass(),"seleniumInfo id:" + seleniumInfo.getId());
         return seleniumInfoDao.insertSeleniumInfo(seleniumInfo);
     }
 
@@ -59,7 +59,7 @@ public class SeleniumInfoServiceImpl implements SeleniumInfoService {
      */
     @Override
     public int deleteSeleniumInfo(SeleniumInfo seleniumInfo) {
-        LogUtil.info(this,"seleniumInfo id:" + seleniumInfo.getId());
+        LogUtil.info(this.getClass(),"seleniumInfo id:" + seleniumInfo.getId());
         return seleniumInfoDao.deleteSeleniumInfo(seleniumInfo);
     }
 
@@ -70,19 +70,19 @@ public class SeleniumInfoServiceImpl implements SeleniumInfoService {
      */
     @Override
     public int updateSeleniumInfo(SeleniumInfo seleniumInfo) {
-        LogUtil.info(this,"seleniumInfo id:" + seleniumInfo.getId());
+        LogUtil.info(this.getClass(),"seleniumInfo id:" + seleniumInfo.getId());
         return seleniumInfoDao.updateSeleniumInfo(seleniumInfo);
     }
 
     @Override
     public List<SeleniumInfo> findAll() {
-        LogUtil.info(this,"seleniumInfo findAll");
+        LogUtil.info(this.getClass(),"seleniumInfo findAll");
         return seleniumInfoDao.findAll();
     }
 
     @Override
     public SeleniumInfo findLast() {
-        LogUtil.info(this,"seleniumInfo findAll");
+        LogUtil.info(this.getClass(),"seleniumInfo findAll");
         return seleniumInfoDao.findLast();
     }
 }
