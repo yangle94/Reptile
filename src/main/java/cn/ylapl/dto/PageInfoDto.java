@@ -1,15 +1,21 @@
 package cn.ylapl.dto;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
  * 关于要爬取得页面的信息
  * Created by Angle on 2017/3/5.
  */
+@ApiModel("PageInfoDto")
 public class PageInfoDto implements Serializable {
 
+    @ApiModelProperty(name = "paramInfoDto", dataType = "ParamInfoDto")
     private ParamInfoDto paramInfoDto;
 
+    @ApiModelProperty(name = "analysisInfoDto", dataType = "AnalysisInfoDto")
     private AnalysisInfoDto analysisInfoDto;
 
     public ParamInfoDto getParamInfoDto() {

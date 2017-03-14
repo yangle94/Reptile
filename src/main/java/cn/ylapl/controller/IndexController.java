@@ -28,10 +28,8 @@ public class IndexController {
     @Autowired
     private HtmlService htmlService;
 
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "pageInfoDto",value = "爬取页面参数", required = true, dataType = "PageInfoDto", paramType = "body")
-//    })
     @ApiOperation(value="使用httpClient爬取页面", notes="使用httpClient爬取页面", produces = "application/json")
+    @ApiImplicitParam(name = "pageInfoDto", value = "用户详细实体user", required = true, dataType = "PageInfoDto", paramType = "body")
     @RequestMapping("getValue")
     public Result getValue(@RequestBody PageInfoDto pageInfoDto) {
 
@@ -44,10 +42,8 @@ public class IndexController {
         return result.setObject(resMap);
     }
 
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "body", value = "抓取信息", required = true, dataType = "ParamInfoDto", paramType = "body")
-//    })
     @ApiOperation(value="使用httpClient爬取页面", notes="使用httpClient爬取页面", produces = "application/json")
+    @ApiImplicitParam(name = "pageInfoDto", value = "抓取信息", required = true, dataType = "ParamInfoDto", paramType = "body")
     @RequestMapping("getHtml")
     public Result getHtml(@RequestBody ParamInfoDto pageInfoDto) {
 
