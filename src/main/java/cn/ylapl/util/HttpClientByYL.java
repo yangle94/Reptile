@@ -7,6 +7,7 @@ package cn.ylapl.util;
 import cn.ylapl.util.empty.MapUtil;
 import cn.ylapl.util.logger.LogUtil;
 import org.apache.http.*;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -61,7 +62,8 @@ public class HttpClientByYL {
      */
     private static CloseableHttpClient getHttpClient() {
         init();
-        return HttpClients.custom().setRedirectStrategy(new DefaultRedirectStrategy() {
+        return HttpClients.custom().setDefaultRequestConfig(RequestConfig.custom()
+                .setConnectionRequestTimeout(2000).setConnectTimeout(2000).setSocketTimeout(2000).build()).setRedirectStrategy(new DefaultRedirectStrategy() {
             public boolean isRedirected(HttpRequest request, HttpResponse response, HttpContext context) {
                 boolean isRedirect = false;
                 try {
@@ -138,6 +140,8 @@ public class HttpClientByYL {
                 }
             }
 
+            addHeader(httpGet);
+
         } catch (URISyntaxException e) {
             LogUtil.error(HttpClientByYL.class, "url编码出现异常", e);
         }
@@ -203,6 +207,8 @@ public class HttpClientByYL {
             }
         }
 
+        addHeader(httpPost);
+
         ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
 
         try {
@@ -234,10 +240,19 @@ public class HttpClientByYL {
     }
 
     /**
+     * 更换HttpRequest请求头
+     * @param httpRequest
+     */
+    private static void addHeader(HttpRequest httpRequest) {
+
+        httpRequest.addHeader("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36");
+    }
+
+    /**
      * 处理Http请求
      */
     private static String getResult(HttpRequestBase request) {
-        LogUtil.debug(HttpClientByYL.class, "进入处理请求");
+        LogUtil.info(HttpClientByYL.class, "进入处理请求");
 
         CloseableHttpClient httpClient = getHttpClient();
         HttpEntity entity = null;
@@ -246,7 +261,7 @@ public class HttpClientByYL {
 
             entity = response.getEntity();
             if (entity != null) {
-                String result = EntityUtils.toString(entity);
+                String result = EntityUtils.toString(entity,UTF_8);
                 response.close();
                 return result;
             }
