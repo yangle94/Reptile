@@ -31,7 +31,7 @@ public class HttpOperat {
      */
     public String getHtml(ParamInfoDto paramInfoDto) {
 
-        LogUtil.debug(HttpOperat.class, "paramInfoDto:" + GsonUtil.toJson(paramInfoDto));
+        LogUtil.info(HttpOperat.class, "paramInfoDto:" + GsonUtil.toJson(paramInfoDto));
 
         String html = "";
 

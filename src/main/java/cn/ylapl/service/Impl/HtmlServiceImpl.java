@@ -26,7 +26,10 @@ public class HtmlServiceImpl implements HtmlService {
     @Override
     public String getHtml(ParamInfoDto pageInfo) {
 
+        LogUtil.info(HtmlServiceImpl.class, "请求参数");
         String html = httpOperat.getHtml(pageInfo);
+        LogUtil.info(HtmlServiceImpl.class, "获得页面html：" + html);
+
         return html;
     }
 
