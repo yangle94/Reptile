@@ -27,7 +27,7 @@ public class TimeInterceptor {
      * @return 方法返回值
      */
     @Around(POINT)
-    public Object timeAround(ProceedingJoinPoint joinPoint) {
+    public Object timeAround(ProceedingJoinPoint joinPoint) throws Throwable {
         // 定义返回对象、得到方法需要的参数
         Object obj = null;
         Object[] args = joinPoint.getArgs();
@@ -37,6 +37,7 @@ public class TimeInterceptor {
             obj = joinPoint.proceed(args);
         } catch (Throwable e) {
             LogUtil.error(TimeInterceptor.class,"统计某方法执行耗时环绕通知出错");
+            throw new Throwable(e);
         }
 
         // 获取执行的方法名

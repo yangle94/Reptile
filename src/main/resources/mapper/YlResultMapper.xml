@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ylapl.mapper.YlResultMapper" >
+  <resultMap id="BaseResultMap" type="cn.ylapl.entity.YlResult" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="html" property="html" jdbcType="VARCHAR" />
+    <result column="creatime" property="creatime" jdbcType="TIMESTAMP" />
+    <result column="creatuser" property="creatuser" jdbcType="INTEGER" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="updateuser" property="updateuser" jdbcType="INTEGER" />
+    <result column="deleteflag" property="deleteflag" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>
