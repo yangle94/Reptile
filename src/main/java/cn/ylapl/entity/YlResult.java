@@ -167,4 +167,17 @@ public class YlResult {
     public void setHtml(String html) {
         this.html = html;
     }
+
+    @Override
+    public String toString() {
+        return "YlResult{" +
+                "id=" + id +
+                ", creatime=" + creatime +
+                ", creatuser=" + creatuser +
+                ", updatetime=" + updatetime +
+                ", updateuser=" + updateuser +
+                ", deleteflag=" + deleteflag +
+                ", html='" + html + '\'' +
+                '}';
+    }
 }

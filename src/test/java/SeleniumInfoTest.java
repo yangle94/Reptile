@@ -4,6 +4,8 @@
  */
 
 import cn.ylapl.Base;
+import cn.ylapl.entity.YlResult;
+import cn.ylapl.mapper.YlResultMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,4 +20,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = Base.class)
 public class SeleniumInfoTest {
 
+    @Autowired
+    private YlResultMapper ylResultMapper;
+
+    @Test
+    public void select() {
+        YlResult ylResult1 = new YlResult();
+        ylResult1.setId(1);
+        YlResult ylResult2 = ylResultMapper.selectByPrimaryKey(ylResult1);
+        System.out.println(ylResult2.getHtml());
+    }
 }

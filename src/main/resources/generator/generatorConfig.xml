@@ -11,8 +11,7 @@
         <property name="endingDelimiter" value="`"/>
 
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <!--<property name="mappers" value="tk.mybatis.springboot.util.MyMapper"/>-->
-            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper,tk.mybatis.mapper.common.MySqlMapper"/>
 
         </plugin>
 
@@ -29,14 +28,11 @@
         <javaClientGenerator targetPackage="cn.ylapl.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-        <!--<table tableName="yl%">-->
-            <!--&lt;!&ndash;mysql 配置&ndash;&gt;-->
-            <!--<generatedKey column="id" sqlStatement="Mysql" identity="true" />-->
-            <!--&lt;!&ndash;oracle 配置&ndash;&gt;-->
-            <!--&lt;!&ndash;<generatedKey column="id" sqlStatement="select SEQ_{1}.nextval from dual" identity="false" type="pre"/>&ndash;&gt;-->
-        <!--</table>-->
-        <table tableName="yl_result">
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        <table tableName="yl%">
+            <!--mysql 配置-->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true" />
+            <!--oracle 配置-->
+            <!--<generatedKey column="id" sqlStatement="select SEQ_{1}.nextval from dual" identity="false" type="pre"/>-->
         </table>
     </context>
 </generatorConfiguration>

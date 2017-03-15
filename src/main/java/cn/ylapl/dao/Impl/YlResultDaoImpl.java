@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,13 +19,16 @@ import java.util.List;
  */
 
 @Service
-@CacheConfig(cacheNames = "ylResults",keyGenerator = "wiselyKeyGenerator")
+@CacheConfig(cacheNames = "YlResultDaoImpl",keyGenerator = "wiselyKeyGenerator")
 public class YlResultDaoImpl implements YlResultDao {
 
     @Autowired
     private YlResultMapper ylResultMapper;
 
-    @Cacheable()
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Cacheable
     @Override
     public YlResult getOneById(YlResult ylResult) {
 
