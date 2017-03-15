@@ -5,12 +5,12 @@
     <!--
       WARNING - @mbg.generated
     -->
-    <result column="id" property="id" jdbcType="INTEGER" />
-    <result column="html" property="html" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="creatime" property="creatime" jdbcType="TIMESTAMP" />
     <result column="creatuser" property="creatuser" jdbcType="INTEGER" />
     <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
     <result column="updateuser" property="updateuser" jdbcType="INTEGER" />
     <result column="deleteflag" property="deleteflag" jdbcType="INTEGER" />
+    <result column="html" property="html" jdbcType="LONGVARCHAR" />
   </resultMap>
 </mapper>

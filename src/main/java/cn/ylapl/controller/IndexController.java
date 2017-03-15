@@ -7,15 +7,13 @@ package cn.ylapl.controller;
 import cn.ylapl.dto.PageInfoDto;
 import cn.ylapl.dto.ParamInfoDto;
 import cn.ylapl.dto.ValueResultDto;
+import cn.ylapl.entity.YlResult;
 import cn.ylapl.service.HtmlService;
 import cn.ylapl.util.Result;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 /**
  * @author yangle
@@ -54,4 +52,35 @@ public class IndexController {
         return result;
     }
 
+    @ApiOperation(value="使用httpClient爬取页面", notes="使用httpClient爬取页面")
+    @ApiImplicitParam(name = "id", value = "所需ID", required = true, dataType = "int", paramType = "query")
+    @RequestMapping("getHtmlByDB")
+    public Result getHtmlByDB() {
+
+        Result<String> result = new Result<>();
+        result.setCode(1);
+
+        YlResult ylResult = new YlResult();
+        ylResult.setId(1);
+
+        result.setObject(htmlService.getHtmlByDB(ylResult));
+
+        return result;
+    }
+
+    @ApiOperation(value="使用httpClient爬取页面", notes="使用httpClient爬取页面")
+    @ApiImplicitParam(name = "id", value = "所需ID", required = true, dataType = "int", paramType = "query")
+    @RequestMapping("deleteHtmlByDB")
+    public Result deleteHtmlByDB(@RequestParam int id) {
+
+        Result<Integer> result = new Result<>();
+        result.setCode(1);
+
+        YlResult ylResult = new YlResult();
+        ylResult.setId(id);
+
+        result.setObject(htmlService.deleteHtmlToDb(ylResult));
+
+        return result;
+    }
 }

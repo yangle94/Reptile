@@ -4,7 +4,6 @@
  */
 
 import cn.ylapl.Base;
-import cn.ylapl.mapper.SeleniumInfoMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +17,5 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Base.class)
 public class SeleniumInfoTest {
-    @Autowired
-    private SeleniumInfoMapper seleniumInfoMapper;
-
-    @Test
-    public void findAll() {
-        seleniumInfoMapper.findAll();
-    }
-
 
 }
