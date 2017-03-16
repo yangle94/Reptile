@@ -43,17 +43,23 @@ public class HttpClientByYL {
      */
     private static final int MAX_ROUTE_NUM = 300;
 
-    private static PoolingHttpClientConnectionManager cm;
     private static final String UTF_8 = "UTF-8";
 
     /**
-     * 初始化httpclient路由参数
+     * 静态内部类保持单例
      */
-    private static void init() {
-        if (cm == null) {
-            cm = new PoolingHttpClientConnectionManager();
-            cm.setMaxTotal(MAX_CONNECTION);// 整个连接池最大连接数
-            cm.setDefaultMaxPerRoute(MAX_ROUTE_NUM);// 每路由最大连接数，默认值是2
+    private static class PoolingHttpClientConnectionManagerHolder {
+
+        private static final PoolingHttpClientConnectionManager cmHolder = init();
+        /**
+         * 初始化httpclient路由参数
+         */
+        private static PoolingHttpClientConnectionManager init() {
+            System.out.println("加载了!!!");
+            PoolingHttpClientConnectionManager cmh = new PoolingHttpClientConnectionManager();
+            cmh.setMaxTotal(MAX_CONNECTION);// 整个连接池最大连接数
+            cmh.setDefaultMaxPerRoute(MAX_ROUTE_NUM);// 每路由最大连接数，默认值是2
+            return cmh;
         }
     }
 
@@ -61,7 +67,6 @@ public class HttpClientByYL {
      * 通过连接池获取HttpClient
      */
     private static CloseableHttpClient getHttpClient() {
-        init();
         return HttpClients.custom().setDefaultRequestConfig(RequestConfig.custom()
                 .setConnectionRequestTimeout(2000).setConnectTimeout(2000).setSocketTimeout(2000).build()).setRedirectStrategy(new DefaultRedirectStrategy() {
             public boolean isRedirected(HttpRequest request, HttpResponse response, HttpContext context) {
@@ -79,7 +84,7 @@ public class HttpClientByYL {
                 }
                 return isRedirect;
             }
-        }).setConnectionManager(cm).build();
+        }).setConnectionManager(PoolingHttpClientConnectionManagerHolder.cmHolder).build();
     }
 
     /**
