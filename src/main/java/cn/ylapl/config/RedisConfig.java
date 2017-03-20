@@ -41,6 +41,8 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     /**
      * 缓存管理器
+     * @param objRedisTemplate Object redis模板
+     * @return 缓存管理器对象
      */
     @Bean
     public CacheManager cacheObjectManager(RedisTemplate objRedisTemplate) {
