@@ -21,6 +21,7 @@
         <pageHelper.version>1.1.0</pageHelper.version>
         <selenium.version>3.3.1</selenium.version>
         <java.version>1.8</java.version>
+        <jedis.version>2.9.0</jedis.version>
     </properties>
 
     <!-- Inherit defaults from Spring Boot -->
@@ -63,6 +64,13 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-redis</artifactId>
             <version>${redis.version}</version>
+        </dependency>
+
+        <!-- redis client -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
         </dependency>
 
         <!-- mongodb -->
