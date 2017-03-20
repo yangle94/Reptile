@@ -180,4 +180,16 @@ public class YlResult {
                 ", html='" + html + '\'' +
                 '}';
     }
+
+    public YlResult(Date creatime, Integer creatuser, Date updatetime, Integer updateuser, Integer deleteflag, String html) {
+        this.creatime = creatime;
+        this.creatuser = creatuser;
+        this.updatetime = updatetime;
+        this.updateuser = updateuser;
+        this.deleteflag = deleteflag;
+        this.html = html;
+    }
+
+    public YlResult() {
+    }
 }

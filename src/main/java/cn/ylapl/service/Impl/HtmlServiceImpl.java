@@ -36,8 +36,7 @@ public class HtmlServiceImpl implements HtmlService {
         String html = httpOperat.getHtml(pageInfo);
         Date now = new Date();
 
-//        YlResult ylResultBuild = new YlResult(html, now, -1, now, -1, 0);
-        YlResult ylResult = new YlResult();
+        YlResult ylResult = new YlResult(now, -1, now, -1, 0, html);
         ylResultDao.insert(ylResult);
 
         LogUtil.debug(HtmlServiceImpl.class, "获得页面html：" + html);

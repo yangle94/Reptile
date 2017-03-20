@@ -87,7 +87,7 @@ public class HttpOperat {
      */
     public Map<String, String> getValueByClass(Document document, Set<String> classSet) {
 
-        LogUtil.debug(HttpOperat.class, "ids:" + GsonUtil.toJson(classSet) + "document:" + GsonUtil.toJson(document));
+        LogUtil.debug(HttpOperat.class, "ids:" + GsonUtil.toJson(classSet) + "document:" + document.outerHtml());
 
         Map<String, String> classResultMap = new HashMap<>();
         Elements elements;
