@@ -1,5 +1,6 @@
 package cn.ylapl.dto;
 
+import cn.ylapl.util.GsonUtil;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -48,9 +49,6 @@ public class PageInfoDto implements Serializable {
 
     @Override
     public String toString() {
-        return "PageInfoDto{" +
-                "paramInfoDto=" + paramInfoDto +
-                ", analysisInfoDto=" + analysisInfoDto +
-                '}';
+        return GsonUtil.toJson(this);
     }
 }

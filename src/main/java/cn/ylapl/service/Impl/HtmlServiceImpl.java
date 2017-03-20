@@ -7,9 +7,11 @@ import cn.ylapl.dto.ValueResultDto;
 import cn.ylapl.entity.YlResult;
 import cn.ylapl.operat.HttpOperat;
 import cn.ylapl.service.HtmlService;
-import cn.ylapl.util.logger.LogUtil;
+import cn.ylapl.util.GsonUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,7 @@ import java.util.Date;
 
 @Service
 public class HtmlServiceImpl implements HtmlService {
+    private static final Logger logger = LoggerFactory.getLogger(HtmlServiceImpl.class);
 
     @Autowired
     private HttpOperat httpOperat;
@@ -32,14 +35,15 @@ public class HtmlServiceImpl implements HtmlService {
     @Override
     public String getHtml(ParamInfoDto pageInfo) {
 
-        LogUtil.debug(HtmlServiceImpl.class, "请求参数");
+        logger.debug("请求参数:{}" , pageInfo);
+
         String html = httpOperat.getHtml(pageInfo);
         Date now = new Date();
 
         YlResult ylResult = new YlResult(now, -1, now, -1, 0, html);
         ylResultDao.insert(ylResult);
 
-        LogUtil.debug(HtmlServiceImpl.class, "获得页面html：" + html);
+        logger.debug("获得页面html:{}", html);
 
         return html;
     }

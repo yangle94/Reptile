@@ -5,7 +5,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ * 接受rabbitMQ消息
  * Created by Angle on 2017/3/20.
  */
 @Component

@@ -1,5 +1,7 @@
 package cn.ylapl.dto;
 
+import cn.ylapl.util.GsonUtil;
+
 import java.io.Serializable;
 import java.util.Set;
 
@@ -24,11 +26,7 @@ public class AnalysisInfoDto implements Serializable {
 
     @Override
     public String toString() {
-        return "AnalysisInfoDto{" +
-                "ids=" + ids +
-                ", xpath=" + xpath +
-                ", classstr=" + classstr +
-                '}';
+        return GsonUtil.toJson(this);
     }
 
     public Set<String> getIds() {

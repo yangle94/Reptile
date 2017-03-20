@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 /**
- *
+ * rabbitMQ发送消息测试
  * Created by Angle on 2017/3/20.
  */
 

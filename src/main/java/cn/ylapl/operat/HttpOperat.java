@@ -6,10 +6,11 @@ import cn.ylapl.util.GsonUtil;
 import cn.ylapl.util.HttpClientByYL;
 import cn.ylapl.util.empty.CollectionUtil;
 import cn.ylapl.util.empty.StringUtil;
-import cn.ylapl.util.logger.LogUtil;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -24,6 +25,8 @@ import java.util.Set;
 @Component
 public class HttpOperat {
 
+    private static final Logger logger = LoggerFactory.getLogger(HttpOperat.class);
+
     /**
      * 获得页面html
      * @param paramInfoDto 参数信息
@@ -31,12 +34,12 @@ public class HttpOperat {
      */
     public String getHtml(ParamInfoDto paramInfoDto) {
 
-        LogUtil.info(HttpOperat.class, "paramInfoDto:" + GsonUtil.toJson(paramInfoDto));
+        logger.info("paramInfoDto:{}", paramInfoDto);
 
         String html = "";
 
         if(paramInfoDto == null || StringUtil.isEmpty(paramInfoDto.getUrl())) {
-            LogUtil.error(HttpOperat.class, "访问URL允许为空", null);
+            logger.error("访问URL不允许为空");
             throw new ValueIsNullException("访问URL不允许为空！");
         }
 
@@ -51,7 +54,7 @@ public class HttpOperat {
             html = HttpClientByYL.httpGetRequest(paramInfoDto.getUrl(), paramInfoDto.getParam(), paramInfoDto.getHeader());
         }
 
-        LogUtil.debug(HttpOperat.class, "获得html：" + html);
+        logger.debug("获得html：{}", html);
         return html;
     }
 
@@ -62,7 +65,7 @@ public class HttpOperat {
      */
     public Map<String, String> getValueById(Document document, Set<String> ids) {
 
-        LogUtil.debug(HttpOperat.class, "ids:" + GsonUtil.toJson(ids));
+        logger.debug("ids:{}", GsonUtil.toJson(ids));
 
         Map<String, String> idResultMap = new HashMap<>();
         Element element;
@@ -76,7 +79,7 @@ public class HttpOperat {
             }
         }
 
-        LogUtil.debug(HttpOperat.class, "使用ID解析文件结果：" + GsonUtil.toJson(idResultMap));
+        logger.debug("使用ID解析文件结果：{}", GsonUtil.toJson(idResultMap));
         return idResultMap;
     }
 
@@ -87,7 +90,7 @@ public class HttpOperat {
      */
     public Map<String, String> getValueByClass(Document document, Set<String> classSet) {
 
-        LogUtil.debug(HttpOperat.class, "ids:" + GsonUtil.toJson(classSet) + "document:" + document.outerHtml());
+        logger.debug("ids:{},document:{}", GsonUtil.toJson(classSet), document.outerHtml());
 
         Map<String, String> classResultMap = new HashMap<>();
         Elements elements;
@@ -107,7 +110,7 @@ public class HttpOperat {
             }
         }
 
-        LogUtil.debug(HttpOperat.class, "使用class解析文件结果：" + GsonUtil.toJson(classResultMap));
+        logger.debug("使用class解析文件结果：{}", GsonUtil.toJson(classResultMap));
         return classResultMap;
     }
 }

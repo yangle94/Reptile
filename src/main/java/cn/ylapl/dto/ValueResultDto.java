@@ -1,11 +1,10 @@
 package cn.ylapl.dto;
 
-import io.swagger.annotations.ApiModel;
-
 import java.io.Serializable;
 import java.util.Map;
 
 /**
+ * 根据id、class的返回对象
  * Created by Angle on 2017/3/13.
  */
 public class ValueResultDto implements Serializable{

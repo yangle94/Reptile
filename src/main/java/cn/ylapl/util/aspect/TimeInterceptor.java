@@ -1,10 +1,11 @@
 package cn.ylapl.util.aspect;
 
-import cn.ylapl.util.logger.LogUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class TimeInterceptor {
+    private static final Logger logger = LoggerFactory.getLogger(TimeInterceptor.class);
 
     // 一分钟，即1000ms
     private static final long ONE_MINUTE = 0;
@@ -29,14 +31,14 @@ public class TimeInterceptor {
     @Around(POINT)
     public Object timeAround(ProceedingJoinPoint joinPoint) throws Throwable {
         // 定义返回对象、得到方法需要的参数
-        Object obj = null;
+        Object obj;
         Object[] args = joinPoint.getArgs();
         long startTime = System.currentTimeMillis();
 
         try {
             obj = joinPoint.proceed(args);
         } catch (Throwable e) {
-            LogUtil.error(TimeInterceptor.class,"统计某方法执行耗时环绕通知出错");
+            logger.error("统计某方法执行耗时环绕通知出错");
             throw new Throwable(e);
         }
 
@@ -60,7 +62,7 @@ public class TimeInterceptor {
     private void printExecTime(String methodName, long startTime, long endTime) {
         long diffTime = endTime - startTime;
         if (diffTime > ONE_MINUTE) {
-            LogUtil.info(TimeInterceptor.class, "-----" + methodName + " 方法执行耗时：" + diffTime + " ms");
+            logger.info("-----" + methodName + " 方法执行耗时：" + diffTime + " ms");
         }
     }
 }

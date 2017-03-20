@@ -13,7 +13,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ValueIsNullException.class)
+    /**
+     * 统一异常类返回值
+     * @param e 异常
+     * @return 错误信息JSON字符串
+     */
+    @ExceptionHandler(Exception.class)
     public Result valueIsNullException(ValueIsNullException e) {
         Result result = new Result();
 

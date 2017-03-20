@@ -5,7 +5,6 @@
 package cn.ylapl.util;
 
 import cn.ylapl.util.empty.MapUtil;
-import cn.ylapl.util.logger.LogUtil;
 import org.apache.http.*;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -22,6 +21,8 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -34,6 +35,7 @@ import java.util.Map;
  * @version $Id HttpClientByYL.java, v 0.1 2016-11-04 上午11:02 yangle Exp $$
  */
 public class HttpClientByYL {
+    private static final Logger logger = LoggerFactory.getLogger(HttpClientByYL.class);
     /**
      * 连接池的最大连接数400
      */
@@ -115,7 +117,7 @@ public class HttpClientByYL {
         try {
             httpGet = new HttpGet(ub.build());
         } catch (URISyntaxException e) {
-            LogUtil.error(HttpClientByYL.class, "url编码出现异常", e);
+            logger.error("url编码出现异常 ub:{}", ub);
         }
         return getResult(httpGet);
     }
@@ -148,7 +150,7 @@ public class HttpClientByYL {
             addHeader(httpGet);
 
         } catch (URISyntaxException e) {
-            LogUtil.error(HttpClientByYL.class, "url编码出现异常", e);
+            logger.error("url编码出现异常:{}", e);
         }
 
         return getResult(httpGet);
@@ -176,7 +178,7 @@ public class HttpClientByYL {
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
         } catch (UnsupportedEncodingException e) {
-            LogUtil.error(HttpClientByYL.class, "url编码出现异常", e);
+            logger.error("url编码出现异常:{}", e);
         }
         return getResult(httpPost);
     }
@@ -221,7 +223,7 @@ public class HttpClientByYL {
             httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
         } catch (UnsupportedEncodingException e) {
 
-            LogUtil.error(HttpClientByYL.class, "url编码出现异常", e);
+            logger.error("url编码出现异常:{}", e);
         }
 
         return getResult(httpPost);
@@ -246,7 +248,7 @@ public class HttpClientByYL {
 
     /**
      * 更换HttpRequest请求头
-     * @param httpRequest
+     * @param httpRequest httpRequest请求
      */
     private static void addHeader(HttpRequest httpRequest) {
 
@@ -257,7 +259,7 @@ public class HttpClientByYL {
      * 处理Http请求
      */
     private static String getResult(HttpRequestBase request) {
-        LogUtil.info(HttpClientByYL.class, "进入处理请求");
+        logger.info("进入处理请求");
 
         CloseableHttpClient httpClient = getHttpClient();
         HttpEntity entity = null;
@@ -272,14 +274,14 @@ public class HttpClientByYL {
             }
         } catch (IOException e) {
 
-            LogUtil.error(HttpClientByYL.class, "http请求IO异常：", e);
+            logger.error("http请求IO异常：{}", e);
         } finally {
 
             if(entity != null) {
                 try {
                     EntityUtils.consume(entity);
                 } catch (IOException e) {
-                    LogUtil.error(HttpClientByYL.class, "关闭请求异常：", e);
+                    logger.error("关闭请求异常：{}", e);
                 }
             }
         }

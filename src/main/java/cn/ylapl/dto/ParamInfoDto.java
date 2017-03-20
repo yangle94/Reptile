@@ -1,5 +1,7 @@
 package cn.ylapl.dto;
 
+import cn.ylapl.util.GsonUtil;
+
 import java.io.Serializable;
 import java.util.Map;
 
@@ -26,12 +28,7 @@ public class ParamInfoDto implements Serializable {
 
     @Override
     public String toString() {
-        return "ParamInfoDto{" +
-                "url='" + url + '\'' +
-                ", method='" + method + '\'' +
-                ", param=" + param +
-                ", header=" + header +
-                '}';
+        return GsonUtil.toJson(this);
     }
 
     public String getUrl() {
