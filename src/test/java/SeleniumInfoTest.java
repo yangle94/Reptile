@@ -3,22 +3,16 @@
  * Copyright (C) 2004-2017 All Rights Reserved.
  */
 
-import cn.ylapl.Base;
 import cn.ylapl.entity.YlResult;
 import cn.ylapl.mapper.YlResultMapper;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.net.URL;
@@ -49,10 +43,10 @@ public class SeleniumInfoTest {
         RemoteWebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),capabilities);
         driver.get("http://www.baidu.com");
 
-        WebElement issp = new WebDriverWait(driver,10)
-                .until((ExpectedCondition<WebElement>) webDriver -> webDriver.findElement(By.name("ie")));
+        WebDriverWait wait = new WebDriverWait(driver, 3);
+        WebElement issp = wait.until(webDriver -> webDriver.findElement(By.id("issp")));
 
-        driver.findElementById("kw").sendKeys("卧槽你马！");
+        driver.findElementById("kw").sendKeys("~~~");
         driver.findElementById("su").click();
 
         System.out.println(issp.getText());
