@@ -21,6 +21,7 @@ import java.util.List;
 @CacheConfig(cacheNames = "YlResultDaoImpl",keyGenerator = "wiselyKeyGenerator")
 public class YlResultDaoImpl implements YlResultDao {
 
+    @SuppressWarnings("all")
     @Autowired
     private YlResultMapper ylResultMapper;
 

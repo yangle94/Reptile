@@ -38,7 +38,8 @@ public class SwaggerConfig {
     }
 
     private ApiInfo demoApiInfo() {
-        ApiInfo apiInfo = new ApiInfo("个人开源",//大标题
+
+        return new ApiInfo("个人开源",//大标题
                 "个人开源",//小标题
                 "1.0",//版本
                 "NO terms of service",
@@ -46,7 +47,5 @@ public class SwaggerConfig {
                 "The Apache License, Version 2.0",//链接显示文字
                 "http://www.apache.org/licenses/LICENSE-2.0.html"//网站链接
         );
-
-        return apiInfo;
     }
 }

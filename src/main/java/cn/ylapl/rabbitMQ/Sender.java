@@ -18,8 +18,12 @@ import java.util.Date;
 public class Sender {
     private static final Logger logger = LoggerFactory.getLogger(Sender.class);
 
+    private final AmqpTemplate amqpTemplate;
+
     @Autowired
-    private AmqpTemplate amqpTemplate;
+    public Sender(AmqpTemplate amqpTemplate) {
+        this.amqpTemplate = amqpTemplate;
+    }
 
     @Scheduled(fixedDelay = 1000)
     public void Send() {

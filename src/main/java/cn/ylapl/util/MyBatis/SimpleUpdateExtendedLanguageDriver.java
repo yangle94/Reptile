@@ -26,7 +26,7 @@ public class SimpleUpdateExtendedLanguageDriver extends XMLLanguageDriver implem
     public SqlSource createSqlSource(Configuration configuration, String script, Class<?> parameterType) {
         Matcher matcher = inPattern.matcher(script);
         if (matcher.find()) {
-            StringBuffer ss = new StringBuffer();
+            StringBuilder ss = new StringBuilder();
             ss.append("<set>");
 
             for (Field field : parameterType.getDeclaredFields()) {

@@ -13,7 +13,7 @@ import com.google.gson.reflect.TypeToken;
  * @author yangle
  * @version $Id NullStringToEmptyAdapterFactory.java, v 0.1 2016-11-21 下午2:04 yangle Exp $$
  */
-public class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
+public class NullStringToEmptyAdapterFactory implements TypeAdapterFactory {
     @SuppressWarnings("unchecked")
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
         Class<T> rawType = (Class<T>) type.getRawType();

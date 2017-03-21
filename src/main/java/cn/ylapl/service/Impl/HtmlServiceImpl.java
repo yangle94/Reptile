@@ -7,7 +7,6 @@ import cn.ylapl.dto.ValueResultDto;
 import cn.ylapl.entity.YlResult;
 import cn.ylapl.operat.HttpOperat;
 import cn.ylapl.service.HtmlService;
-import cn.ylapl.util.GsonUtil;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
@@ -26,11 +25,15 @@ import java.util.Date;
 public class HtmlServiceImpl implements HtmlService {
     private static final Logger logger = LoggerFactory.getLogger(HtmlServiceImpl.class);
 
-    @Autowired
-    private HttpOperat httpOperat;
+    private final HttpOperat httpOperat;
+
+    private final YlResultDao ylResultDao;
 
     @Autowired
-    private YlResultDao ylResultDao;
+    public HtmlServiceImpl(HttpOperat httpOperat, YlResultDao ylResultDao) {
+        this.httpOperat = httpOperat;
+        this.ylResultDao = ylResultDao;
+    }
 
     @Override
     public String getHtml(ParamInfoDto pageInfo) {
@@ -41,9 +44,8 @@ public class HtmlServiceImpl implements HtmlService {
         Date now = new Date();
 
         YlResult ylResult = new YlResult(now, -1, now, -1, 0, html);
-        ylResultDao.insert(ylResult);
-
-        logger.debug("获得页面html:{}", html);
+        int num = ylResultDao.insert(ylResult);
+        logger.debug("获得页面html:{},插入数据库条数:{}", html, num);
 
         return html;
     }

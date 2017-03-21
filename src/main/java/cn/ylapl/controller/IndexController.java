@@ -23,8 +23,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "htppclient", method = RequestMethod.POST)
 public class IndexController {
 
+    private final HtmlService htmlService;
+
     @Autowired
-    private HtmlService htmlService;
+    public IndexController(HtmlService htmlService) {
+        this.htmlService = htmlService;
+    }
 
     @ApiOperation(value="使用httpClient爬取页面", notes="使用httpClient爬取页面", produces = "application/json")
     @ApiImplicitParam(name = "pageInfoDto", value = "用户详细实体user", required = true, dataType = "PageInfoDto", paramType = "body")
