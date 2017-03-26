@@ -9,6 +9,7 @@ import cn.ylapl.dto.ParamInfoDto;
 import cn.ylapl.dto.ValueResultDto;
 import cn.ylapl.entity.YlResult;
 import cn.ylapl.service.HtmlService;
+import cn.ylapl.service.LagoHtmlService;
 import cn.ylapl.util.Result;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -25,9 +26,12 @@ public class IndexController {
 
     private final HtmlService htmlService;
 
+    private final LagoHtmlService lagoHtmlService;
+
     @Autowired
-    public IndexController(HtmlService htmlService) {
+    public IndexController(HtmlService htmlService, LagoHtmlService lagoHtmlService) {
         this.htmlService = htmlService;
+        this.lagoHtmlService = lagoHtmlService;
     }
 
     @ApiOperation(value="使用httpClient爬取页面", notes="使用httpClient爬取页面", produces = "application/json")
@@ -87,4 +91,15 @@ public class IndexController {
 
         return result;
     }
+
+    @ApiOperation(value="使用httpClient爬取拉钩页面", notes="使用httpClient爬取拉钩页面", produces = "application/json")
+    @ApiImplicitParam(name = "pageInfoDto", value = "抓取信息", required = true, dataType = "ParamInfoDto", paramType = "body")
+    @RequestMapping("getCompanies")
+    public String getCompanies(@RequestBody ParamInfoDto pageInfoDto) {
+
+        String result = lagoHtmlService.getCompanies(pageInfoDto);
+
+        return result;
+    }
+
 }

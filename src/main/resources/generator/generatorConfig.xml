@@ -28,7 +28,7 @@
         <javaClientGenerator targetPackage="cn.ylapl.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-        <table tableName="yl%">
+        <table tableName="yl_company_recruitment">
             <!--mysql 配置-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true" />
             <!--oracle 配置-->

@@ -4,10 +4,7 @@
  */
 package cn.ylapl.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import cn.ylapl.util.gsonAdpater.NullStringToEmptyAdapterFactory;
 import cn.ylapl.util.gsonAdpater.ParameterizedTypeImpl;
@@ -29,7 +26,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @version $Id GsonUtil.java, v 0.1 2016-12-01 下午2:43 yangle Exp $$
  */
 public class GsonUtil {
-    private static Gson gson;
+    public static Gson gson;
 
     static {
         GsonBuilder gb = new GsonBuilder();
@@ -90,7 +87,7 @@ public class GsonUtil {
     }
 
     public static JsonObject toJsonObj(String str){
-        return new JsonObject().getAsJsonObject(str);
+        return new JsonParser().parse(str).getAsJsonObject();
     }
 
     private GsonUtil() {

@@ -47,11 +47,11 @@ public class HttpOperat {
 
         if(method.equalsIgnoreCase("post")) {
 
-            html = HttpClientByYL.httpPostRequest(paramInfoDto.getUrl(), paramInfoDto.getParam(), paramInfoDto.getHeader());
+            html = HttpClientByYL.httpPostRequest(paramInfoDto.getUrl(), paramInfoDto.getHeader(), paramInfoDto.getParam());
         }
         else if(method.equalsIgnoreCase("get")) {
 
-            html = HttpClientByYL.httpGetRequest(paramInfoDto.getUrl(), paramInfoDto.getParam(), paramInfoDto.getHeader());
+            html = HttpClientByYL.httpGetRequest(paramInfoDto.getUrl(), paramInfoDto.getHeader(), paramInfoDto.getParam());
         }
 
         logger.debug("获得html：{}", html);

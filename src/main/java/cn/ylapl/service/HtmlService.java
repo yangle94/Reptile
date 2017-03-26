@@ -20,4 +20,5 @@ public interface HtmlService {
     int updateYlResult(YlResult ylResult);
 
     int deleteHtmlToDb(YlResult ylResult);
+
 }

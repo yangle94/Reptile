@@ -14,7 +14,7 @@ import java.util.Date;
  * Created by Angle on 2017/3/20.
  */
 
-@Component
+//@Component
 public class Sender {
     private static final Logger logger = LoggerFactory.getLogger(Sender.class);
 
@@ -25,10 +25,10 @@ public class Sender {
         this.amqpTemplate = amqpTemplate;
     }
 
-    @Scheduled(fixedDelay = 1000)
-    public void Send() {
-        String context = "hello" + new Date();
-        logger.debug("send messages");
-        amqpTemplate.convertAndSend("test",context);
-    }
+//    @Scheduled(fixedDelay = 1000)
+//    public void Send() {
+//        String context = "hello" + new Date();
+//        logger.debug("send messages");
+//        amqpTemplate.convertAndSend("test",context);
+//    }
 }
