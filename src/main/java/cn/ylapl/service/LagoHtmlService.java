@@ -13,4 +13,10 @@ public interface LagoHtmlService {
      * @return
      */
     String getCompanies(ParamInfoDto pageInfoDto);
+
+    /**
+     * 查询企查查
+     * @return
+     */
+    String getQCC(String qq, String pwd);
 }

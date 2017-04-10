@@ -35,22 +35,22 @@ public class SeleniumInfoTest {
         YlResult ylResult2 = ylResultMapper.selectByPrimaryKey(ylResult1);
         System.out.println(ylResult2.getHtml());
     }
-
-    public static void main(String[] args) throws IOException {
-
-        Capabilities capabilities = DesiredCapabilities.chrome();
-
-        RemoteWebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),capabilities);
-        driver.get("http://www.baidu.com");
-
-        WebDriverWait wait = new WebDriverWait(driver, 3);
-        WebElement issp = wait.until(webDriver -> webDriver.findElement(By.id("issp")));
-
-        driver.findElementById("kw").sendKeys("~~~");
-        driver.findElementById("su").click();
-
-        System.out.println(issp.getText());
-
-        driver.quit();
-    }
+//
+//    public static void main(String[] args) throws IOException {
+//
+//        Capabilities capabilities = DesiredCapabilities.chrome();
+//
+//        RemoteWebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"),capabilities);
+//        driver.get("http://www.baidu.com");
+//
+//        WebDriverWait wait = new WebDriverWait(driver, 3);
+//        WebElement issp = wait.until(webDriver -> webDriver.findElement(By.id("issp")));
+//
+//        driver.findElementById("kw").sendKeys("~~~");
+//        driver.findElementById("su").click();
+//
+//        System.out.println(issp.getText());
+//
+//        driver.quit();
+//    }
 }

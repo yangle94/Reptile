@@ -2,20 +2,33 @@ package cn.ylapl.service.Impl;
 
 import cn.ylapl.dto.ParamInfoDto;
 import cn.ylapl.entity.YlCompany;
+import cn.ylapl.entity.YlCompanyQcc;
 import cn.ylapl.entity.YlCompanyRecruitment;
 import cn.ylapl.mapper.YlCompanyMapper;
+import cn.ylapl.mapper.YlCompanyQccMapper;
 import cn.ylapl.mapper.YlCompanyRecruitmentMapper;
 import cn.ylapl.operat.CompanyMatchCounter;
 import cn.ylapl.operat.HttpOperat;
+import cn.ylapl.operat.SeleniumMatchCounter;
+import cn.ylapl.operat.SeleniumOperat;
 import cn.ylapl.service.LagoHtmlService;
 import cn.ylapl.util.GsonUtil;
-import cn.ylapl.util.empty.StringUtil;
+import com.google.common.base.Function;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
 import java.util.concurrent.*;
 
 /**
@@ -33,6 +46,9 @@ public class LagoHtmlServiceImpl implements LagoHtmlService {
 
     @Autowired
     private YlCompanyMapper companyMapper;
+
+    @Autowired
+    private YlCompanyQccMapper companyQccMapper;
 
     @Override
     public String getCompanies(ParamInfoDto pageInfoDto) {
@@ -102,8 +118,29 @@ public class LagoHtmlServiceImpl implements LagoHtmlService {
 
         return html;
     }
-//
-//    public static void main(String[] args) {
-//        new LagoHtmlServiceImpl().getCompanies();
-//    }
+
+    @Override
+    public String getQCC(String qq, String pwd) {
+
+
+        //创建线程池
+        ThreadPoolExecutor pool = (ThreadPoolExecutor) Executors.newFixedThreadPool(7);
+        List<YlCompany> list = companyMapper.selectAll();
+
+        for (YlCompany company : list) {
+            RemoteWebDriver webDriver = null;
+
+            try {
+                webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), DesiredCapabilities.chrome());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            SeleniumMatchCounter seleniumMatchCounter = new SeleniumMatchCounter(company.getCompanyFullName(), webDriver, companyQccMapper);
+            pool.submit(seleniumMatchCounter);
+        }
+
+        return null;
+    }
+
 }

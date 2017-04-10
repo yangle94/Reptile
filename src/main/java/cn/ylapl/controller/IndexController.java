@@ -12,6 +12,7 @@ import cn.ylapl.service.HtmlService;
 import cn.ylapl.service.LagoHtmlService;
 import cn.ylapl.util.Result;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -98,6 +99,19 @@ public class IndexController {
     public String getCompanies(@RequestBody ParamInfoDto pageInfoDto) {
 
         String result = lagoHtmlService.getCompanies(pageInfoDto);
+
+        return result;
+    }
+
+    @ApiOperation(value="使用httpClient爬取拉钩页面", notes="使用httpClient爬取拉钩页面")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "qq", value = "qq账号", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "pwd", value = "qq密码", required = true, dataType = "String", paramType = "query")
+    })
+    @RequestMapping("getQCC")
+    public String getQCC(@RequestParam String qq, @RequestParam String pwd) {
+
+        String result = lagoHtmlService.getQCC(qq, pwd);
 
         return result;
     }
