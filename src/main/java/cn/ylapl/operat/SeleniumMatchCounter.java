@@ -4,11 +4,14 @@ import cn.ylapl.entity.YlCompanyQcc;
 import cn.ylapl.mapper.YlCompanyQccMapper;
 import com.google.common.base.Function;
 import org.openqa.selenium.*;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -31,24 +34,21 @@ public class SeleniumMatchCounter implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(SeleniumOperat.class);
 
     static {
+
         list = new ArrayList<>();
         list.add(new Cookie("UM_distinctid","15b47e9ec2e720-03ddec25f707c1-317f0158-152ac0-15b47e9ec2f41c"));
         list.add(new Cookie("gr_user_id","d85b4bde-9698-4e55-9b1f-c9822a21b696"));
         list.add(new Cookie("_uab_collina","149156017551584659150686"));
         list.add(new Cookie("_umdata","85957DF9A4B3B3E877BBD074000136653A58256396A7985D0C59280EB886EA4859FAC6728212E5B8CD43AD3E795C914C2F7888978B49EF36F250B0264E01B03A"));
-        list.add(new Cookie("acw_tc","AQAAANsQvlg49gwADzRafFdobznzft3U"));
+        list.add(new Cookie("acw_tc","AQAAAAMfCBNcOgIA68qBt7uIAFq+IvHC"));
         list.add(new Cookie("PHPSESSID","tem1e35cu264spfoq72kugnjq7"));
         list.add(new Cookie("_uab_collina","149156017551584659150686"));
-        list.add(new Cookie("CNZZDATA1254842228","460960818-1491556889-https%253A%252F%252Fwww.baidu.com%252F%7C1491571135"));
-        list.add(new Cookie("gr_session_id_9c1eb7420511f8b2","475d9991-68ae-48da-b737-d0e0ec801f41"));
+        list.add(new Cookie("CNZZDATA1254842228","460960818-1491556889-https%253A%252F%252Fwww.baidu.com%252F%7C1491873360"));
+        list.add(new Cookie("gr_session_id_9c1eb7420511f8b2","6e1df914-34bf-4025-a1b9-3b4eab59c67a"));
     }
 
-    public SeleniumMatchCounter(String companyName, RemoteWebDriver webDriver, YlCompanyQccMapper mapper) {
+    public SeleniumMatchCounter(String companyName, YlCompanyQccMapper mapper) {
         this.companyName = companyName;
-        this.webDriver = webDriver;
-
-        webDriver.get("http://www.qichacha.com/");
-        saveCookie();
         this.mapper = mapper;
     }
 
@@ -61,6 +61,16 @@ public class SeleniumMatchCounter implements Runnable {
     }
 
     private void getHtml() {
+        try {
+            webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), DesiredCapabilities.chrome());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        webDriver.get("http://www.qichacha.com/");
+        saveCookie();
+
+
         YlCompanyQcc ylCompanyQcc = new YlCompanyQcc();
 
         //查找输入框

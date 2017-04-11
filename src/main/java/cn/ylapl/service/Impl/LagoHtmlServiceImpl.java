@@ -122,21 +122,13 @@ public class LagoHtmlServiceImpl implements LagoHtmlService {
     @Override
     public String getQCC(String qq, String pwd) {
 
-
         //创建线程池
-        ThreadPoolExecutor pool = (ThreadPoolExecutor) Executors.newFixedThreadPool(7);
+        ThreadPoolExecutor pool = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
         List<YlCompany> list = companyMapper.selectAll();
 
         for (YlCompany company : list) {
-            RemoteWebDriver webDriver = null;
 
-            try {
-                webDriver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), DesiredCapabilities.chrome());
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
-
-            SeleniumMatchCounter seleniumMatchCounter = new SeleniumMatchCounter(company.getCompanyFullName(), webDriver, companyQccMapper);
+            SeleniumMatchCounter seleniumMatchCounter = new SeleniumMatchCounter(company.getCompanyFullName(), companyQccMapper);
             pool.submit(seleniumMatchCounter);
         }
 
