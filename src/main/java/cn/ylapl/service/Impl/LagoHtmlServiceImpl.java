@@ -51,7 +51,7 @@ public class LagoHtmlServiceImpl implements LagoHtmlService {
                 "},\n" +
                 "  \"method\": \"post\",\n" +
                 "  \"param\": {\"first\":\"false\",\n" +
-                "\"pn\":1,\n" +
+                "\"pn\":50,\n" +
                 "\"sortField\":0,\n" +
                 "\"havemark\":0},\n" +
                 "  \"url\": \"https://www.lagou.com/gongsi/6-0-0.json\"\n" +
@@ -64,7 +64,7 @@ public class LagoHtmlServiceImpl implements LagoHtmlService {
 
 
         //获得公司列表
-        int i = 1;
+        int i = 50;
         while (true) {
             //结果集hash
             ConcurrentHashMap<String, Future<YlCompanyRecruitment>> resMap = new ConcurrentHashMap<>();
