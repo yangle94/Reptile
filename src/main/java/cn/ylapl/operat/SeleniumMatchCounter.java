@@ -43,15 +43,15 @@ public class SeleniumMatchCounter implements Runnable {
         list2 = new ArrayList<>();
         list3 = new ArrayList<>();
 
-        list3.add(new Cookie("UM_distinctid","15b57aa5aee729-0f3212c6e5d864-396a7807-13c680-15b57aa5aef63e"));
-        list3.add(new Cookie("gr_user_id","0cc6a016-b943-49e1-bb5f-81fc5825142b"));
-        list3.add(new Cookie("_uab_collina","149182443836786272614275"));
+        list3.add(new Cookie("UM_distinctid","15b623d5a851096-023b474d729014-396a7807-13c680-15b623d5a866e9"));
+        list3.add(new Cookie("gr_user_id","67b0aada-4a9c-4c04-8d2b-79dcedc1d289"));
+        list3.add(new Cookie("_uab_collina","149200184840012091234149"));
         list3.add(new Cookie("_umdata","A502B1276E6D5FEFE172818A53763A853A58256396A7985DA6735D5D7B4CCD1AF23F5C6932E729E2CD43AD3E795C914CD0E5D6FF5BFC78C00A68946D8FDCB60B"));
-        list3.add(new Cookie("acw_tc","AQAAAB0Jvjsz0gwADzRafOhYhxu25QZD"));
-        list3.add(new Cookie("PHPSESSID","988cj539tifm66mqduvfm3vav1"));
+        list3.add(new Cookie("acw_tc","AQAAAGkItUk9jgAADzRafAEnSeibcQIF"));
+        list3.add(new Cookie("PHPSESSID","f5j415j3ic330uc2us61qt8hu3"));
         list3.add(new Cookie("_uab_collina","149156017551584659150686"));
-        list3.add(new Cookie("CNZZDATA1254842228","61004937-1491823770-https%253A%252F%252Fwww.google.com%252F%7C1491915648"));
-        list3.add(new Cookie("gr_session_id_9c1eb7420511f8b2","b5f2e388-1249-4007-9387-5e1631990186"));
+        list3.add(new Cookie("CNZZDATA1254842228","1805840269-1491996685-%7C1491996685"));
+        list3.add(new Cookie("gr_session_id_9c1eb7420511f8b2","ef0b2a37-0095-4811-a27c-51fba642a93c"));
 
         list1.add(new Cookie("UM_distinctid","15b47e9ec2e720-03ddec25f707c1-317f0158-152ac0-15b47e9ec2f41c"));
         list1.add(new Cookie("gr_user_id","d85b4bde-9698-4e55-9b1f-c9822a21b696"));
@@ -84,7 +84,7 @@ public class SeleniumMatchCounter implements Runnable {
     private void saveCookie() {
         WebDriver.Options options = webDriver.manage();
 
-        int num =(int)(Math.random() * 12);
+        int num =(int)(Math.random() * 120);
 
         int res = num % 3;
 
@@ -92,7 +92,7 @@ public class SeleniumMatchCounter implements Runnable {
             for (Cookie cookie : list1) {
                 options.addCookie(cookie);
             }
-        } else if (res == 1) {
+        } else if (res == 1){
             for (Cookie cookie : list2) {
                 options.addCookie(cookie);
             }
@@ -101,7 +101,6 @@ public class SeleniumMatchCounter implements Runnable {
                 options.addCookie(cookie);
             }
         }
-
     }
 
     private void getHtml() {
@@ -129,16 +128,21 @@ public class SeleniumMatchCounter implements Runnable {
                         webDriver1.findElement(By.id("V3_Search_bt")));
         searchBtn.submit();
 
+        wati();
         //选择第一个企业
         WebElement firstCompany = new WebDriverWait(webDriver, 10).until(
                 (Function<WebDriver, WebElement>)webDriver1 ->
                         webDriver1.findElement(By.xpath("//*[@id=\"searchlist\"]/table/tbody/tr[1]/td[2]/a")));
         firstCompany.click();
 
+        wati();
+
         //切换窗口
         Set<String> winHandels = webDriver.getWindowHandles();
         List<String> it = new ArrayList<>(winHandels);
         webDriver.switchTo().window(it.get(1));
+
+        wati();
 
         //工商信息
         ylCompanyQcc.setCompanyBusinessInformation(getInfo("//*[@id=\"Cominfo\"]/table"));
@@ -195,8 +199,9 @@ public class SeleniumMatchCounter implements Runnable {
 
         //商标信息
         StringBuilder sb2 = new StringBuilder();
+
         page(sb2, "#shangbiaolist > div:nth-child(3) > table > tbody", "#shangbiaolist > div:nth-child(3) > div > nav > ul > li.active + li > a", webDriver);
-        ylCompanyQcc.setTrademark(getInfo("//*[@id=\"Sockinfo\"]/table/tbody"));
+        ylCompanyQcc.setTrademark(sb2.toString());
 
         mapper.insert(ylCompanyQcc);
 
@@ -208,7 +213,7 @@ public class SeleniumMatchCounter implements Runnable {
             WebElement wb5;
 
             try {
-                wb5 = new WebDriverWait(webDriver, 5).until(
+                wb5 = new WebDriverWait(webDriver, 3).until(
                         (Function<WebDriver, WebElement>)webDriver1 ->
                                 webDriver1.findElement(By.cssSelector(cssSelector)));
 
@@ -218,22 +223,25 @@ public class SeleniumMatchCounter implements Runnable {
                 break;
             }
 
-
             WebElement wb6;
             try {
-                wb6 = new WebDriverWait(webDriver, 5).until(
+                wb6 = new WebDriverWait(webDriver, 3).until(
                         (Function<WebDriver, WebElement>)webDriver1 ->
                                 webDriver1.findElement(By.cssSelector(cssSelectorActive)));
                 wb6.click();
+
+                Thread.sleep(2000);
             } catch (TimeoutException e) {
                 break;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
         }
     }
 
     private String getInfo(String xpath) {
         try {
-            WebElement wb3 = new WebDriverWait(webDriver, 5).until(
+            WebElement wb3 = new WebDriverWait(webDriver, 3).until(
                     (Function<WebDriver, WebElement>)webDriver1 ->
                             webDriver1.findElement(By.xpath(xpath)));
 
@@ -248,5 +256,13 @@ public class SeleniumMatchCounter implements Runnable {
     @Override
     public void run() {
         getHtml();
+    }
+
+    private void wati() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

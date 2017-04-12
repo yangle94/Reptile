@@ -96,9 +96,9 @@ public class IndexController {
     @ApiOperation(value="使用httpClient爬取拉钩页面", notes="使用httpClient爬取拉钩页面", produces = "application/json")
     @ApiImplicitParam(name = "pageInfoDto", value = "抓取信息", required = true, dataType = "ParamInfoDto", paramType = "body")
     @RequestMapping("getCompanies")
-    public String getCompanies(@RequestBody ParamInfoDto pageInfoDto) {
+    public String getCompanies() {
 
-        String result = lagoHtmlService.getCompanies(pageInfoDto);
+        String result = lagoHtmlService.getCompanies(null);
 
         return result;
     }
