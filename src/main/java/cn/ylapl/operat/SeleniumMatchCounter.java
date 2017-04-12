@@ -25,9 +25,13 @@ public class SeleniumMatchCounter implements Runnable {
     //公司名
     private String companyName;
 
-    private static List<Cookie> list;
+    private static List<Cookie> list1;
+
+    private static List<Cookie> list2, list3;
 
     private RemoteWebDriver webDriver;
+
+    private String id;
 
     private final YlCompanyQccMapper mapper;
 
@@ -35,29 +39,70 @@ public class SeleniumMatchCounter implements Runnable {
 
     static {
 
-        list = new ArrayList<>();
-        list.add(new Cookie("UM_distinctid","15b47e9ec2e720-03ddec25f707c1-317f0158-152ac0-15b47e9ec2f41c"));
-        list.add(new Cookie("gr_user_id","d85b4bde-9698-4e55-9b1f-c9822a21b696"));
-        list.add(new Cookie("_uab_collina","149156017551584659150686"));
-        list.add(new Cookie("_umdata","85957DF9A4B3B3E877BBD074000136653A58256396A7985D0C59280EB886EA4859FAC6728212E5B8CD43AD3E795C914C2F7888978B49EF36F250B0264E01B03A"));
-        list.add(new Cookie("acw_tc","AQAAAAMfCBNcOgIA68qBt7uIAFq+IvHC"));
-        list.add(new Cookie("PHPSESSID","tem1e35cu264spfoq72kugnjq7"));
-        list.add(new Cookie("_uab_collina","149156017551584659150686"));
-        list.add(new Cookie("CNZZDATA1254842228","460960818-1491556889-https%253A%252F%252Fwww.baidu.com%252F%7C1491873360"));
-        list.add(new Cookie("gr_session_id_9c1eb7420511f8b2","6e1df914-34bf-4025-a1b9-3b4eab59c67a"));
+        list1 = new ArrayList<>();
+        list2 = new ArrayList<>();
+        list3 = new ArrayList<>();
+
+        list3.add(new Cookie("UM_distinctid","15b57aa5aee729-0f3212c6e5d864-396a7807-13c680-15b57aa5aef63e"));
+        list3.add(new Cookie("gr_user_id","0cc6a016-b943-49e1-bb5f-81fc5825142b"));
+        list3.add(new Cookie("_uab_collina","149182443836786272614275"));
+        list3.add(new Cookie("_umdata","A502B1276E6D5FEFE172818A53763A853A58256396A7985DA6735D5D7B4CCD1AF23F5C6932E729E2CD43AD3E795C914CD0E5D6FF5BFC78C00A68946D8FDCB60B"));
+        list3.add(new Cookie("acw_tc","AQAAAB0Jvjsz0gwADzRafOhYhxu25QZD"));
+        list3.add(new Cookie("PHPSESSID","988cj539tifm66mqduvfm3vav1"));
+        list3.add(new Cookie("_uab_collina","149156017551584659150686"));
+        list3.add(new Cookie("CNZZDATA1254842228","61004937-1491823770-https%253A%252F%252Fwww.google.com%252F%7C1491915648"));
+        list3.add(new Cookie("gr_session_id_9c1eb7420511f8b2","b5f2e388-1249-4007-9387-5e1631990186"));
+
+
+        list1.add(new Cookie("UM_distinctid","15b47e9ec2e720-03ddec25f707c1-317f0158-152ac0-15b47e9ec2f41c"));
+        list1.add(new Cookie("gr_user_id","d85b4bde-9698-4e55-9b1f-c9822a21b696"));
+        list1.add(new Cookie("_uab_collina","149156017551584659150686"));
+        list1.add(new Cookie("_umdata","85957DF9A4B3B3E877BBD074000136653A58256396A7985D0C59280EB886EA4859FAC6728212E5B8CD43AD3E795C914C2F7888978B49EF36F250B0264E01B03A"));
+        list1.add(new Cookie("acw_tc","AQAAAG4/8lF6FQQADzRafL2usN6c/jQK"));
+        list1.add(new Cookie("PHPSESSID","tem1e35cu264spfoq72kugnjq7"));
+        list1.add(new Cookie("_uab_collina","149156017551584659150686"));
+        list1.add(new Cookie("CNZZDATA1254842228","460960818-1491556889-https%253A%252F%252Fwww.baidu.com%252F%7C1491910247"));
+        list1.add(new Cookie("gr_session_id_9c1eb7420511f8b2","9d7dc23e-4165-47a7-b85b-b9eb3d0d3084"));
+
+        list2.add(new Cookie("UM_distinctid","15b57aa5aee729-0f3212c6e5d864-396a7807-13c680-15b57aa5aef63e"));
+        list2.add(new Cookie("gr_user_id","0cc6a016-b943-49e1-bb5f-81fc5825142b"));
+        list2.add(new Cookie("_uab_collina","149156017551584659150686"));
+        list2.add(new Cookie("_umdata","A502B1276E6D5FEFE172818A53763A853A58256396A7985DA6735D5D7B4CCD1AF23F5C6932E729E2CD43AD3E795C914C46A3CB78A63A2777F7D0D7A8D2DD41C0"));
+        list2.add(new Cookie("acw_tc","AQAAAB0Jvjsz0gwADzRafOhYhxu25QZD"));
+        list2.add(new Cookie("PHPSESSID","988cj539tifm66mqduvfm3vav1"));
+        list2.add(new Cookie("_uab_collina","149182443836786272614275"));
+        list2.add(new Cookie("CNZZDATA1254842228","61004937-1491823770-https%253A%252F%252Fwww.google.com%252F%7C1491876749"));
+        list2.add(new Cookie("gr_session_id_9c1eb7420511f8b2","07f85c0a-45e0-466a-bdb8-6bf9be9f8cea"));
+
     }
 
-    public SeleniumMatchCounter(String companyName, YlCompanyQccMapper mapper) {
+    public SeleniumMatchCounter(String companyName, YlCompanyQccMapper mapper, String id) {
         this.companyName = companyName;
         this.mapper = mapper;
+        this.id = id;
     }
 
     private void saveCookie() {
         WebDriver.Options options = webDriver.manage();
 
-        for (Cookie cookie : list) {
-            options.addCookie(cookie);
+        int num =(int)(Math.random() * 11);
+
+        int res = num % 3;
+
+        if (res == 0) {
+            for (Cookie cookie : list1) {
+                options.addCookie(cookie);
+            }
+        } else if (res == 1) {
+            for (Cookie cookie : list2) {
+                options.addCookie(cookie);
+            }
+        } else {
+            for (Cookie cookie : list3) {
+                options.addCookie(cookie);
+            }
         }
+
     }
 
     private void getHtml() {
@@ -70,8 +115,8 @@ public class SeleniumMatchCounter implements Runnable {
         webDriver.get("http://www.qichacha.com/");
         saveCookie();
 
-
         YlCompanyQcc ylCompanyQcc = new YlCompanyQcc();
+        ylCompanyQcc.setCompanyInfo(id);
 
         //查找输入框
         WebElement searchInput = new WebDriverWait(webDriver, 10).until(

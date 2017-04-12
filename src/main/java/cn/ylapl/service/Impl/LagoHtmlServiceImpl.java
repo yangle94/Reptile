@@ -2,7 +2,6 @@ package cn.ylapl.service.Impl;
 
 import cn.ylapl.dto.ParamInfoDto;
 import cn.ylapl.entity.YlCompany;
-import cn.ylapl.entity.YlCompanyQcc;
 import cn.ylapl.entity.YlCompanyRecruitment;
 import cn.ylapl.mapper.YlCompanyMapper;
 import cn.ylapl.mapper.YlCompanyQccMapper;
@@ -10,24 +9,14 @@ import cn.ylapl.mapper.YlCompanyRecruitmentMapper;
 import cn.ylapl.operat.CompanyMatchCounter;
 import cn.ylapl.operat.HttpOperat;
 import cn.ylapl.operat.SeleniumMatchCounter;
-import cn.ylapl.operat.SeleniumOperat;
 import cn.ylapl.service.LagoHtmlService;
 import cn.ylapl.util.GsonUtil;
-import com.google.common.base.Function;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -123,12 +112,19 @@ public class LagoHtmlServiceImpl implements LagoHtmlService {
     public String getQCC(String qq, String pwd) {
 
         //创建线程池
-        ThreadPoolExecutor pool = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
-        List<YlCompany> list = companyMapper.selectAll();
+        ExecutorService pool = Executors.newFixedThreadPool(6);
+//        List<YlCompany> list = companyMapper.selectAll();
+
+        YlCompany ylCompany = new YlCompany();
+        ylCompany.setId(349);
+        Example example = new Example(YlCompany.class);
+        example.createCriteria()
+                .andCondition("not exists(select id from yl_company_qcc where yl_company.id = yl_company_qcc.company_info)");
+        List<YlCompany> list = companyMapper.selectByExample(example);
 
         for (YlCompany company : list) {
 
-            SeleniumMatchCounter seleniumMatchCounter = new SeleniumMatchCounter(company.getCompanyFullName(), companyQccMapper);
+            SeleniumMatchCounter seleniumMatchCounter = new SeleniumMatchCounter(company.getCompanyFullName(), companyQccMapper, company.getId().toString());
             pool.submit(seleniumMatchCounter);
         }
 
