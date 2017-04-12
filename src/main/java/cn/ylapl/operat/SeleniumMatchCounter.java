@@ -53,7 +53,6 @@ public class SeleniumMatchCounter implements Runnable {
         list3.add(new Cookie("CNZZDATA1254842228","61004937-1491823770-https%253A%252F%252Fwww.google.com%252F%7C1491915648"));
         list3.add(new Cookie("gr_session_id_9c1eb7420511f8b2","b5f2e388-1249-4007-9387-5e1631990186"));
 
-
         list1.add(new Cookie("UM_distinctid","15b47e9ec2e720-03ddec25f707c1-317f0158-152ac0-15b47e9ec2f41c"));
         list1.add(new Cookie("gr_user_id","d85b4bde-9698-4e55-9b1f-c9822a21b696"));
         list1.add(new Cookie("_uab_collina","149156017551584659150686"));
@@ -85,7 +84,7 @@ public class SeleniumMatchCounter implements Runnable {
     private void saveCookie() {
         WebDriver.Options options = webDriver.manage();
 
-        int num =(int)(Math.random() * 11);
+        int num =(int)(Math.random() * 12);
 
         int res = num % 3;
 
