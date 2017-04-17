@@ -143,7 +143,7 @@ public class LagoHtmlServiceImpl implements LagoHtmlService {
 //        List<YlCompany> list = companyMapper.selectAll();
 
         YlCompany ylCompany = new YlCompany();
-        ylCompany.setId(349);
+//        ylCompany.setId(349);
         Example example = new Example(YlCompany.class);
         example.createCriteria()
                 .andCondition("not exists(select id from yl_company_qcc where yl_company.id = yl_company_qcc.company_info)");

@@ -39,7 +39,7 @@ public class CompanyMatchCounter implements Callable<YlCompanyRecruitment> {
     //公司列表中的对象
     private YlCompany company;
 
-    public CompanyMatchCounter(ConcurrentHashMap resultMap, ExecutorService poll, int num, YlCompany company) {
+    public CompanyMatchCounter(ConcurrentHashMap<String, Future<YlCompanyRecruitment>> resultMap, ExecutorService poll, int num, YlCompany company) {
         this.resultMap = resultMap;
         this.poll = poll;
         this.num = num;
