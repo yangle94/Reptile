@@ -1,7 +1,6 @@
 package cn.ylapl.util.aspect;
 
 import cn.ylapl.util.GsonUtil;
-import com.google.gson.Gson;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
