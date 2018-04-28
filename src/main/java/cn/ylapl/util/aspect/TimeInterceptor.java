@@ -1,7 +1,6 @@
 package cn.ylapl.util.aspect;
 
-import cn.ylapl.util.GsonUtil;
-import com.google.gson.Gson;
+import cn.ylapl.util.JacksonUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -40,7 +39,7 @@ public class TimeInterceptor {
         try {
             obj = joinPoint.proceed(args);
         } catch (Throwable e) {
-            logger.error("统计某方法执行耗时环绕通知出错，信息：{}", GsonUtil.toJson(args));
+            logger.error("统计某方法执行耗时环绕通知出错，信息：{}", JacksonUtils.objectToJson(args));
             throw new Throwable(e);
         }
 
