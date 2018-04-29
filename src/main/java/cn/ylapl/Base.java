@@ -6,11 +6,13 @@ package cn.ylapl;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
  * @author yangle
  * @version $Id Base.java, v 0.1 2017-01-21 下午5:18 yangle Exp $$
  */
+@EnableJpaAuditing
 @SpringBootApplication
 public class Base {
 
